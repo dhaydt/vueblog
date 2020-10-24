@@ -20,6 +20,7 @@
     "dependencies": {
         "sass": "^1.27.0",
         "sass-loader": "^10.0.3",
+        "view-design": "^4.4.0",
         "vue": "^2.6.12",
         "vue-router": "^3.4.7"
     }
