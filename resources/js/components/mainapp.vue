@@ -21,7 +21,8 @@
               <li v-for="(menuItem, i) in permission" :key="i" v-if="permission.length && menuItem.read">
                 <router-link :to="'/'+menuItem.name"><Icon type="ios-speedometer" /> {{menuItem.resourceName}}</router-link>
               </li>
-              <li><a href="/logout"><Icon type="ios-speedometer" /> Overview</a></li>
+              <li><a href="/"><Icon type="ios-speedometer" /> Home</a></li>
+              <li><a href="/tags"><Icon type="ios-speedometer" /> Tags</a></li>
 
               <!-- <li><router-link to="tags"><Icon type="ios-speedometer" /> Tags</router-link></li>
               <li><router-link to="category"><Icon type="ios-speedometer" /> Category</router-link></li>
@@ -30,7 +31,7 @@
               <li><router-link to="assignRole"><Icon type="ios-speedometer" /> Assign role</router-link></li> -->
 
 
-              <li><a href="/logout"><Icon type="ios-speedometer" /> Logout</a></li>
+              <!-- <li><a href="/logout"><Icon type="ios-speedometer" /> Logout</a></li> -->
             </ul>
           </div>
         </div>

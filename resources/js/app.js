@@ -1,4 +1,5 @@
 require('./bootstrap');
+
 import router from './router.js';
 import VueRouter from 'vue-router';
 import ViewUI from 'view-design';

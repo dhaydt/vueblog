@@ -5,14 +5,33 @@ import FP from './components/pages/first.vue'
 import rot from './components/pages/rot.vue'
 import hook from './components/pages/basic/hooks.vue'
 
+//project pages
+import home from './components/pages/home.vue'
+import tags from './components/pages/tags.vue'
+
 Vue.use(Router);
 
 const routes = [
 //project route
 	{
 		path: '/',
-		component: FP
+		component: home
 	},
+	{
+		path: '/tags',
+		component: tags
+	},
+
+
+
+
+
+
+
+
+
+
+
 
 
 
