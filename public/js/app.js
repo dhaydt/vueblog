@@ -66015,10 +66015,20 @@ var render = function() {
     [
       _c("div", [
         _c("div", { staticClass: "_1side_menu" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "_1side_menu_logo" }, [
+            _c(
+              "h3",
+              { staticStyle: { "text-align": "center" } },
+              [
+                _c("Icon", { attrs: { type: "logo-github" } }),
+                _vm._v("VUE-Blog")
+              ],
+              1
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "_1side_menu_content" }, [
-            _vm._m(1),
+            _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "_1side_menu_list" }, [
               _c(
@@ -66048,29 +66058,38 @@ var render = function() {
                       : _vm._e()
                   }),
                   _vm._v(" "),
-                  _c("li", [
-                    _c(
-                      "a",
-                      { attrs: { href: "/" } },
-                      [
-                        _c("Icon", { attrs: { type: "ios-speedometer" } }),
-                        _vm._v(" Home")
-                      ],
-                      1
-                    )
-                  ]),
+                  _c("li"),
+                  _c(
+                    "li",
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: "/" } },
+                        [
+                          _c("Icon", { attrs: { type: "ios-home" } }),
+                          _vm._v(" Dashboard")
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _c("li", [
-                    _c(
-                      "a",
-                      { attrs: { href: "/tags" } },
-                      [
-                        _c("Icon", { attrs: { type: "ios-speedometer" } }),
-                        _vm._v(" Tags")
-                      ],
-                      1
-                    )
-                  ])
+                  _c(
+                    "li",
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: "tags" } },
+                        [
+                          _c("Icon", { attrs: { type: "ios-desktop" } }),
+                          _vm._v(" Tags")
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
                 ],
                 2
               )
@@ -66095,16 +66114,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "_1side_menu_logo" }, [
-      _c("h3", { staticStyle: { "text-align": "center" } }, [
-        _vm._v("Logo Image")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -66713,23 +66722,93 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { staticClass: "content" }, [
+      _c(
+        "div",
+        { staticClass: "container-fluid" },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20"
+            },
+            [
+              _c(
+                "p",
+                { staticClass: "_title0" },
+                [
+                  _vm._v("Tags "),
+                  _c(
+                    "Button",
+                    { attrs: { type: "default", size: "small" } },
+                    [
+                      _c("Icon", { attrs: { type: "md-add" } }),
+                      _vm._v(" Add tag")
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "_overflow _table_div" }, [
+                _c("table", { staticClass: "_table" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [_vm._v("1")]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "_table_name" }, [
+                      _vm._v('Manhattan\'s art center "Shed" opening ceremony')
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Economy")]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      [
+                        _c(
+                          "Button",
+                          { attrs: { type: "info", size: "small" } },
+                          [_vm._v("Edit")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "Button",
+                          { attrs: { type: "error", size: "small" } },
+                          [_vm._v("Delete")]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("Page", { attrs: { total: 100 } })
+        ],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("h1", [_vm._v("tags")]),
+    return _c("tr", [
+      _c("th", [_vm._v("ID")]),
       _vm._v(" "),
-      _c("h1", [_vm._v("tags")]),
+      _c("th", [_vm._v("Tag Name")]),
       _vm._v(" "),
-      _c("h1", [_vm._v("tags")]),
+      _c("th", [_vm._v("Created at")]),
       _vm._v(" "),
-      _c("h1", [_vm._v("tags")]),
-      _vm._v(" "),
-      _c("h1", [_vm._v("tags")])
+      _c("th", [_vm._v("Action")])
     ])
   }
 ]
@@ -82427,7 +82506,7 @@ var routes = [//project route
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/mh/Documents/LARA-VUE/vueblog/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\vueblog\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })
