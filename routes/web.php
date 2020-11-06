@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,13 @@ use App\Http\Controllers\TestController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//menambah data tag
+Route::post('app/create_tag', [AdminController::class, 'addTag']);
+
+Route::post('app/get_tags', [AdminController::class, 'getTag']);
+//edit tag
+Route::post('app/edit_tag', [AdminController::class, 'editTag']);
+
 
 Route::get('/test', function () {
 	return view('welcome');
