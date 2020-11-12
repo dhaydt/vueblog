@@ -8,6 +8,13 @@
 
     <link rel="stylesheet" type="text/css" href="/css/all.css">
 
+    <script>
+        (function () {
+            window.Laravel = {
+                csrfToken: '{{ csrf_token }}'
+            };
+        })();
+    </script>
 </head>
 <body>
     <div id="app">

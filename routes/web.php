@@ -20,6 +20,8 @@ Route::post('app/create_tag', [AdminController::class, 'addTag']);
 Route::post('app/get_tags', [AdminController::class, 'getTag']);
 //edit tag
 Route::post('app/edit_tag', [AdminController::class, 'editTag']);
+Route::post('app/delete_tag', [AdminController::class, 'deleteTag']);
+Route::post('app/upload', [AdminController::class, 'upload']);
 
 
 Route::get('/test', function () {

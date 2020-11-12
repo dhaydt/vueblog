@@ -5,22 +5,27 @@ import FP from './components/pages/first.vue'
 import rot from './components/pages/rot.vue'
 import hook from './components/pages/basic/hooks.vue'
 
-//project pages
+//adminproject pages
 import home from './components/pages/home.vue'
-import tags from './components/pages/tags.vue'
+import tags from './admin/pages/tags.vue'
+import category from './admin/pages/category.vue'
 
 Vue.use(Router);
 
 const routes = [
-//project route
-	{
-		path: '/',
-		component: home
-	},
-	{
-		path: '/tags',
-		component: tags
-	},
+    //project route
+    {
+        path: '/',
+        component: home
+    },
+    {
+        path: '/tags',
+        component: tags
+    },
+    {
+        path: '/cat',
+        component: category
+    },
 
 
 
@@ -36,24 +41,24 @@ const routes = [
 
 
 
-//test route
-	{
-		path: '/vue',
-		component: FP
-	},
-	{
-		path: '/rot',
-		component: rot
-	},
+    //test route
+    {
+        path: '/vue',
+        component: FP
+    },
+    {
+        path: '/rot',
+        component: rot
+    },
 
-	//vue hooks
-	{
-		path: '/hooks',
-		component: hook
-	}
+    //vue hooks
+    {
+        path: '/hooks',
+        component: hook
+    }
 ]
 
-export default new Router ({
-	mode: 'history',
-	routes
+export default new Router({
+    mode: 'history',
+    routes
 })
