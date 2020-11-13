@@ -11,7 +11,7 @@
     <script>
         (function () {
             window.Laravel = {
-                csrfToken: '{{ csrf_token }}'
+                csrfToken: '{{ csrf_token() }}'
             };
         })();
     </script>
