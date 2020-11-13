@@ -2022,11 +2022,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       data: {
-        tagName: ''
+        iconImage: '',
+        categoryName: ''
       },
       addModal: false,
       editModal: false,
@@ -2190,6 +2198,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var deleteItem = tag;
       this.deletingIndex = i;
       this.showDeleteModal = true;
+    },
+    handleSuccess: function handleSuccess(res, file) {
+      this.data.iconImage = res;
+    },
+    handleError: function handleError(res, file) {
+      this.$Notice.warning({
+        title: 'The file format is incorrect',
+        desc: "".concat(file.errors.file.length ? file.errors.file[0] : 'Something went wrong')
+      });
+    },
+    handleFormatError: function handleFormatError(file) {
+      this.$Notice.warning({
+        title: 'The file format is incorrect',
+        desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
+      });
+    },
+    handleMaxSize: function handleMaxSize(file) {
+      this.$Notice.warning({
+        title: 'Exceeding file size limit',
+        desc: 'File  ' + file.name + ' is too large, no more than 2M.'
+      });
     }
   },
   created: function created() {
@@ -67528,7 +67557,14 @@ var render = function() {
                   attrs: {
                     multiple: "",
                     type: "drag",
-                    headers: { "x-csrf-token": _vm.token },
+                    headers: {
+                      "x-csrf-token": _vm.token,
+                      "X-Requested-With": "XMLHttpRequest"
+                    },
+                    "on-success": _vm.handleSuccess,
+                    "on-error": _vm.handleError,
+                    "max-size": 2048,
+                    "on-exceeded-size": _vm.handleMaxSize,
                     action: "/app/upload"
                   }
                 },
@@ -67548,6 +67584,21 @@ var render = function() {
                   )
                 ]
               ),
+              _vm._v(" "),
+              _vm.data.iconImage
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "image_thumb",
+                      staticStyle: { "align-item": "center" }
+                    },
+                    [
+                      _c("img", {
+                        attrs: { src: "/uploads/" + _vm.data.iconImage }
+                      })
+                    ]
+                  )
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "div",

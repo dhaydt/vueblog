@@ -45,11 +45,10 @@
                                 <Upload
                                     multiple
                                     type="drag"
-                                    :headers="{'x-csrf-token' : token}"
+                                    :headers="{'x-csrf-token' : token, 'X-Requested-With' : 'XMLHttpRequest'}"
                                     :on-success="handleSuccess"
-                                    :format="['jpg','jpeg','png']"
+                                    :on-error="handleError"
                                     :max-size="2048"
-                                    :on-format-error="handleFormatError"
                                     :on-exceeded-size="handleMaxSize"
                                     action="/app/upload">
                                     <div style="padding: 20px 0">
@@ -57,6 +56,9 @@
                                         <p>Click or drag files here to upload</p>
                                     </div>
                                 </Upload>
+                                <div class="image_thumb" v-if="data.iconImage" style="align-item: center">
+                                    <img :src="`/uploads/${data.iconImage}`" >
+                                </div>
 								<div slot="footer">
 									<Button @click="addModal = false" type="default">Close</Button>
 									<Button @click="addTag" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Adding..': 'Add'}}</Button>
@@ -102,7 +104,8 @@
 		data() {
 			return{
 				data 			: {
-									tagName: ''
+									iconImage: '',
+                                    categoryName: '',
 								},
 				addModal 		: false,
 				editModal 		: false,
@@ -195,8 +198,13 @@
 				this.showDeleteModal = true
 			},
             handleSuccess (res, file) {
-                file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
-                file.name = '7eb99afb9d5f317c912f08b5212fd69a';
+                this.data.iconImage = res
+            },
+            handleError (res, file) {
+                this.$Notice.warning({
+                    title: 'The file format is incorrect',
+                    desc: `${file.errors.file.length ? file.errors.file[0] : 'Something went wrong'}`
+                });
             },
             handleFormatError (file) {
                 this.$Notice.warning({
@@ -210,16 +218,7 @@
                     desc: 'File  ' + file.name + ' is too large, no more than 2M.'
                 });
             },
-            handleBeforeUpload () {
-                const check = this.uploadList.length < 5;
-                if (!check) {
-                    this.$Notice.warning({
-                        title: 'Up to five pictures can be uploaded.'
-                    });
-                }
-                return check;
-            }
-		},
+        },
 
 	async created(){
         this.token = window.Laravel.csrfToken
