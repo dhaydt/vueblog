@@ -21,7 +21,7 @@
 
 
 								<!-- ITEMS -->
-							<tr v-for="(tag, i) in tags" :key="i" >
+							<tr v-for="(category, i) in categoryLists" :key="i" v-if="categoryLists.length">
 								<td>{{tag.id}}</td>
 								<td class="_table_name">{{tag.tagName}}</td>
 								<td>{{tag.created_at}}</td>
@@ -36,11 +36,11 @@
 							<!-- ADD Category -->
 							<Modal
 								v-model="addModal"
-								title="Add New Category"
+								title="Tambah Kategori Baru"
 								:mask-closable=false
 								>
 
-								<Input v-model="data.tagName" placeholder="Category Name" />
+								<Input v-model="data.categoryName" placeholder="Nama Kategori" />
                                 <div class="space"></div>
                                 <Upload
                                     multiple
@@ -52,9 +52,10 @@
                                     :max-size="2048"
                                     :on-exceeded-size="handleMaxSize"
                                     action="/app/upload">
+
                                     <div style="padding: 20px 0">
                                         <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                                        <p>Click or drag files here to upload</p>
+                                        <p>Pilih atau seret Gambar Ikon</p>
                                     </div>
                                 </Upload>
                                 <div class="demo-upload-list" v-if="data.iconImage">
@@ -65,7 +66,7 @@
                                 </div>
 								<div slot="footer">
 									<Button @click="addModal = false" type="default">Close</Button>
-									<Button @click="addTag" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Adding..': 'Add'}}</Button>
+									<Button @click="addCategory" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Adding..': 'Add'}}</Button>
 								</div>
 							</Modal>
 
@@ -114,7 +115,7 @@
 				addModal 		: false,
 				editModal 		: false,
 				isAdding 		: false,
-				tags 			: [],
+				categoryLists	: [],
 				editData 		: {
 									tagName: ''
 								},
@@ -132,19 +133,26 @@
 
 		methods : {
 			//menambah data tag
-			async addTag() {
-				if(this.data.tagName.trim()=='') return this.e('Tag name belum di isi')
-				const res = await this.callApi('post', 'app/create_tag', this.data)
+			async addCategory() {
+				if(this.data.categoryName.trim()=='') return this.e('Nama Kategori belum di isi')
+				if(this.data.iconImage.trim()=='') return this.e('Gambar icon belum di pilih')
+                this.data.iconImage = `/uploads/${this.data.iconImage}`
+				const res = await this.callApi('post', 'app/create_category', this.data)
 				if(res.status===201){
 					this.tags.unshift(res.data)
-					this.s('Tag berhasil ditambah')
+					this.s('Kategori berhasil ditambah')
 					this.addModal = false
-					this.data.tagName = ''
+					this.data.categoryName = ''
+					this.data.iconImage = ''
 				} else {
 					if(res.status==442){
-						if(res.data.errors.tagName){
-							this.e(res.data.errors.tagName[0])
+						if(res.data.errors.categoryName){
+							this.e(res.data.errors.categoryName[0])
 						}
+						if(res.data.errors.iconImage){
+							this.e(res.data.errors.iconImage[0])
+						}
+
 					} else {
 						this.swr()
 					}
@@ -236,9 +244,9 @@
 
 	async created(){
         this.token = window.Laravel.csrfToken
-		const res = await this.callApi('get', 'app/get_tags')
+		const res = await this.callApi('get', 'app/get_category')
 		if(res.status==200){
-			this.tags = res.data
+			this.categoryLists = res.data
 		} else {
 			this.swr()
 		}

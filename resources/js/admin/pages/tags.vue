@@ -20,7 +20,7 @@
 
 
 								<!-- ITEMS -->
-							<tr v-for="(tag, i) in tags" :key="i" >
+							<tr v-for="(tag, i) in tags" :key="i" v-if="tags.length" >
 								<td>{{tag.id}}</td>
 								<td class="_table_name">{{tag.tagName}}</td>
 								<td>{{tag.created_at}}</td>

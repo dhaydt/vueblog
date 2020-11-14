@@ -2033,6 +2033,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2043,7 +2044,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       addModal: false,
       editModal: false,
       isAdding: false,
-      tags: [],
+      categoryLists: [],
       editData: {
         tagName: ''
       },
@@ -2058,7 +2059,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     //menambah data tag
-    addTag: function addTag() {
+    addCategory: function addCategory() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2067,38 +2068,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(_this.data.tagName.trim() == '')) {
+                if (!(_this.data.categoryName.trim() == '')) {
                   _context.next = 2;
                   break;
                 }
 
-                return _context.abrupt("return", _this.e('Tag name belum di isi'));
+                return _context.abrupt("return", _this.e('Nama Kategori belum di isi'));
 
               case 2:
-                _context.next = 4;
-                return _this.callApi('post', 'app/create_tag', _this.data);
+                if (!(_this.data.iconImage.trim() == '')) {
+                  _context.next = 4;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.e('Gambar icon belum di pilih'));
 
               case 4:
+                _this.data.iconImage = "/uploads/".concat(_this.data.iconImage);
+                _context.next = 7;
+                return _this.callApi('post', 'app/create_category', _this.data);
+
+              case 7:
                 res = _context.sent;
 
                 if (res.status === 201) {
                   _this.tags.unshift(res.data);
 
-                  _this.s('Tag berhasil ditambah');
+                  _this.s('Kategori berhasil ditambah');
 
                   _this.addModal = false;
-                  _this.data.tagName = '';
+                  _this.data.categoryName = '';
+                  _this.data.iconImage = '';
                 } else {
                   if (res.status == 442) {
-                    if (res.data.errors.tagName) {
-                      _this.e(res.data.errors.tagName[0]);
+                    if (res.data.errors.categoryName) {
+                      _this.e(res.data.errors.categoryName[0]);
+                    }
+
+                    if (res.data.errors.iconImage) {
+                      _this.e(res.data.errors.iconImage[0]);
                     }
                   } else {
                     _this.swr();
                   }
                 }
 
-              case 6:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -2269,13 +2284,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               _this5.token = window.Laravel.csrfToken;
               _context5.next = 3;
-              return _this5.callApi('get', 'app/get_tags');
+              return _this5.callApi('get', 'app/get_category');
 
             case 3:
               res = _context5.sent;
 
               if (res.status == 200) {
-                _this5.tags = res.data;
+                _this5.categoryLists = res.data;
               } else {
                 _this5.swr();
               }
@@ -67508,52 +67523,54 @@ var render = function() {
                   [
                     _vm._m(0),
                     _vm._v(" "),
-                    _vm._l(_vm.tags, function(tag, i) {
-                      return _c("tr", { key: i }, [
-                        _c("td", [_vm._v(_vm._s(tag.id))]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "_table_name" }, [
-                          _vm._v(_vm._s(tag.tagName))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(tag.created_at))]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          [
-                            _c(
-                              "Button",
-                              {
-                                attrs: { type: "info", size: "small" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.showEditModal(tag, i)
-                                  }
-                                }
-                              },
-                              [_vm._v("Edit")]
-                            ),
+                    _vm._l(_vm.categoryLists, function(category, i) {
+                      return _vm.categoryLists.length
+                        ? _c("tr", { key: i }, [
+                            _c("td", [_vm._v(_vm._s(_vm.tag.id))]),
+                            _vm._v(" "),
+                            _c("td", { staticClass: "_table_name" }, [
+                              _vm._v(_vm._s(_vm.tag.tagName))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(_vm.tag.created_at))]),
                             _vm._v(" "),
                             _c(
-                              "Button",
-                              {
-                                attrs: {
-                                  loading: tag.isDeleting,
-                                  type: "error",
-                                  size: "small"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.showDeletingModal(tag, i)
-                                  }
-                                }
-                              },
-                              [_vm._v("Delete")]
+                              "td",
+                              [
+                                _c(
+                                  "Button",
+                                  {
+                                    attrs: { type: "info", size: "small" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.showEditModal(_vm.tag, i)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Edit")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "Button",
+                                  {
+                                    attrs: {
+                                      loading: _vm.tag.isDeleting,
+                                      type: "error",
+                                      size: "small"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.showDeletingModal(_vm.tag, i)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Delete")]
+                                )
+                              ],
+                              1
                             )
-                          ],
-                          1
-                        )
-                      ])
+                          ])
+                        : _vm._e()
                     })
                   ],
                   2
@@ -67565,7 +67582,7 @@ var render = function() {
           _c(
             "Modal",
             {
-              attrs: { title: "Add New Category", "mask-closable": false },
+              attrs: { title: "Tambah Kategori Baru", "mask-closable": false },
               model: {
                 value: _vm.addModal,
                 callback: function($$v) {
@@ -67576,13 +67593,13 @@ var render = function() {
             },
             [
               _c("Input", {
-                attrs: { placeholder: "Category Name" },
+                attrs: { placeholder: "Nama Kategori" },
                 model: {
-                  value: _vm.data.tagName,
+                  value: _vm.data.categoryName,
                   callback: function($$v) {
-                    _vm.$set(_vm.data, "tagName", $$v)
+                    _vm.$set(_vm.data, "categoryName", $$v)
                   },
-                  expression: "data.tagName"
+                  expression: "data.categoryName"
                 }
               }),
               _vm._v(" "),
@@ -67616,7 +67633,7 @@ var render = function() {
                         attrs: { type: "ios-cloud-upload", size: "52" }
                       }),
                       _vm._v(" "),
-                      _c("p", [_vm._v("Click or drag files here to upload")])
+                      _c("p", [_vm._v("Pilih atau seret Gambar Ikon")])
                     ],
                     1
                   )
@@ -67668,7 +67685,7 @@ var render = function() {
                         disabled: _vm.isAdding,
                         loading: _vm.isAdding
                       },
-                      on: { click: _vm.addTag }
+                      on: { click: _vm.addCategory }
                     },
                     [_vm._v(_vm._s(_vm.isAdding ? "Adding.." : "Add"))]
                   )
@@ -67888,51 +67905,53 @@ var render = function() {
                     _vm._m(0),
                     _vm._v(" "),
                     _vm._l(_vm.tags, function(tag, i) {
-                      return _c("tr", { key: i }, [
-                        _c("td", [_vm._v(_vm._s(tag.id))]),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "_table_name" }, [
-                          _vm._v(_vm._s(tag.tagName))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(tag.created_at))]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          [
-                            _c(
-                              "Button",
-                              {
-                                attrs: { type: "info", size: "small" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.showEditModal(tag, i)
-                                  }
-                                }
-                              },
-                              [_vm._v("Edit")]
-                            ),
+                      return _vm.tags.length
+                        ? _c("tr", { key: i }, [
+                            _c("td", [_vm._v(_vm._s(tag.id))]),
+                            _vm._v(" "),
+                            _c("td", { staticClass: "_table_name" }, [
+                              _vm._v(_vm._s(tag.tagName))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(tag.created_at))]),
                             _vm._v(" "),
                             _c(
-                              "Button",
-                              {
-                                attrs: {
-                                  loading: tag.isDeleting,
-                                  type: "error",
-                                  size: "small"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.showDeletingModal(tag, i)
-                                  }
-                                }
-                              },
-                              [_vm._v("Delete")]
+                              "td",
+                              [
+                                _c(
+                                  "Button",
+                                  {
+                                    attrs: { type: "info", size: "small" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.showEditModal(tag, i)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Edit")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "Button",
+                                  {
+                                    attrs: {
+                                      loading: tag.isDeleting,
+                                      type: "error",
+                                      size: "small"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.showDeletingModal(tag, i)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Delete")]
+                                )
+                              ],
+                              1
                             )
-                          ],
-                          1
-                        )
-                      ])
+                          ])
+                        : _vm._e()
                     })
                   ],
                   2
