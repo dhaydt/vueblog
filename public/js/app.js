@@ -2045,6 +2045,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2057,8 +2073,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isAdding: false,
       categoryLists: [],
       editData: {
-        categoryName: '',
-        iconImage: ','
+        iconImage: '',
+        categoryName: ''
       },
       index: -1,
       showDeleteModal: false,
@@ -2066,7 +2082,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       deleteItem: {},
       deletingIndex: -1,
       deleteModal: false,
-      token: ''
+      token: '',
+      isIconImageNew: false,
+      isEditingItem: false
     };
   },
   methods: {
@@ -2198,9 +2216,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         id: category.id,
         categoryName: category.categoryName
       };
-      this.editData = obj;
+      console.log(category);
+      this.editData = category;
       this.editModal = true;
       this.index = index;
+      this.isEditingItem = true;
     },
     deleteCategory: function deleteCategory() {
       var _this3 = this;
@@ -2243,6 +2263,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.showDeleteModal = true;
     },
     handleSuccess: function handleSuccess(res, file) {
+      res = "/uploads/".concat(res);
+
+      if (this.isEditingItem) {
+        return this.editData.iconImage = res;
+      }
+
       this.data.iconImage = res;
     },
     handleError: function handleError(res, file) {
@@ -2264,16 +2290,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     deleteImage: function deleteImage() {
-      var _this4 = this;
+      var _arguments = arguments,
+          _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var image, res;
+        var isAdd, _image, res;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                image = _this4.data.iconImage;
-                _this4.data.iconImage = '', _this4.$refs.uploads.clearFiles();
+                isAdd = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : true;
+
+                if (!isAdd) {
+                  //for editing
+                  _this4.isIconImageNew = true;
+                  _image = _this4.editData.iconImage;
+                  _this4.editData.iconImage = '', _this4.$refs.editDataUploads.clearFiles();
+                } else {
+                  image = _this4.data.iconImage;
+                  _this4.data.iconImage = '', _this4.$refs.uploads.clearFiles();
+                }
+
                 _context4.next = 4;
                 return _this4.callApi('post', 'app/delete_image', {
                   imageName: image
@@ -2295,6 +2333,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee4);
       }))();
+    },
+    closeEditModal: function closeEditModal() {
+      this.isEditingItem = false;
+      this.editModal = false;
     }
   },
   created: function created() {
@@ -67673,9 +67715,7 @@ var render = function() {
               _vm._v(" "),
               _vm.data.iconImage
                 ? _c("div", { staticClass: "demo-upload-list" }, [
-                    _c("img", {
-                      attrs: { src: "/uploads/" + _vm.data.iconImage }
-                    }),
+                    _c("img", { attrs: { src: "" + _vm.data.iconImage } }),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -67745,8 +67785,7 @@ var render = function() {
             },
             [
               _c("Input", {
-                staticStyle: { width: "300px" },
-                attrs: { placeholder: "Edit nama kategori" },
+                attrs: { placeholder: "Nama Kategori" },
                 model: {
                   value: _vm.editData.categoryName,
                   callback: function($$v) {
@@ -67759,35 +67798,68 @@ var render = function() {
               _c("div", { staticClass: "space" }),
               _vm._v(" "),
               _c(
-                "div",
+                "Upload",
                 {
-                  staticClass: "demo-upload-list",
-                  model: {
-                    value: _vm.editData.iconImage,
-                    callback: function($$v) {
-                      _vm.$set(_vm.editData, "iconImage", $$v)
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.isIconImageNew,
+                      expression: "isIconImageNew"
+                    }
+                  ],
+                  ref: "editDataUploads",
+                  attrs: {
+                    type: "drag",
+                    headers: {
+                      "x-csrf-token": _vm.token,
+                      "X-Requested-With": "XMLHttpRequest"
                     },
-                    expression: "editData.iconImage"
+                    "on-success": _vm.handleSuccess,
+                    "on-error": _vm.handleError,
+                    "max-size": 2048,
+                    "on-exceeded-size": _vm.handleMaxSize,
+                    action: "/app/upload"
                   }
                 },
                 [
-                  _c("img", {
-                    attrs: { src: "/uploads/" + _vm.editData.iconImage }
-                  }),
-                  _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "demo-upload-list-cover" },
+                    { staticStyle: { padding: "20px 0" } },
                     [
                       _c("Icon", {
-                        attrs: { type: "ios-trash-outline" },
-                        on: { click: _vm.deleteImage }
-                      })
+                        staticStyle: { color: "#3399ff" },
+                        attrs: { type: "ios-cloud-upload", size: "52" }
+                      }),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("Pilih atau seret Gambar Ikon")])
                     ],
                     1
                   )
                 ]
               ),
+              _vm._v(" "),
+              _vm.editData.iconImage
+                ? _c("div", { staticClass: "demo-upload-list" }, [
+                    _c("img", { attrs: { src: "" + _vm.editData.iconImage } }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "demo-upload-list-cover" },
+                      [
+                        _c("Icon", {
+                          attrs: { type: "ios-trash-outline" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteImage(false)
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "div",
@@ -67797,11 +67869,7 @@ var render = function() {
                     "Button",
                     {
                       attrs: { type: "default" },
-                      on: {
-                        click: function($event) {
-                          _vm.editModal = false
-                        }
-                      }
+                      on: { click: _vm.closeEditModal }
                     },
                     [_vm._v("Close")]
                   ),
@@ -67816,7 +67884,11 @@ var render = function() {
                       },
                       on: { click: _vm.editCategory }
                     },
-                    [_vm._v(_vm._s(_vm.isAdding ? "Editing.." : "Edit"))]
+                    [
+                      _vm._v(
+                        _vm._s(_vm.isAdding ? "Editing.." : "Ubah Kategori")
+                      )
+                    ]
                   )
                 ],
                 1

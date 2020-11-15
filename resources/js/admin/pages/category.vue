@@ -63,7 +63,7 @@
                                     </div>
                                 </Upload>
                                 <div class="demo-upload-list" v-if="data.iconImage">
-                                    <img :src="`/uploads/${data.iconImage}`" >
+                                    <img :src="`${data.iconImage}`" >
 									<div class="demo-upload-list-cover">
 										<Icon type="ios-trash-outline" @click="deleteImage"></Icon>
 									</div>
@@ -81,18 +81,34 @@
 								:mask-closable="false"
 								:closable="false"
 								>
-								<Input v-model="editData.categoryName" placeholder="Edit nama kategori" style="width: 300px" />
-								<div class="space"></div>
-								<div v-model="editData.iconImage" class="demo-upload-list">
-                                    <img :src="`/uploads/${editData.iconImage}`" >
+								<Input v-model="editData.categoryName" placeholder="Nama Kategori" />
+                                <div class="space"></div>
+                                <Upload v-show="isIconImageNew"
+                                    ref="editDataUploads"
+                                    type="drag"
+                                    :headers="{'x-csrf-token' : token, 'X-Requested-With' : 'XMLHttpRequest'}"
+                                    :on-success="handleSuccess"
+                                    :on-error="handleError"
+                                    :max-size="2048"
+                                    :on-exceeded-size="handleMaxSize"
+                                    action="/app/upload">
+
+                                    <div style="padding: 20px 0">
+                                        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                                        <p>Pilih atau seret Gambar Ikon</p>
+                                    </div>
+                                </Upload>
+
+                                <div class="demo-upload-list" v-if="editData.iconImage">
+                                    <img :src="`${editData.iconImage}`" >
 									<div class="demo-upload-list-cover">
-										<Icon type="ios-trash-outline" @click="deleteImage"></Icon>
+										<Icon type="ios-trash-outline" @click="deleteImage(false)"></Icon>
 									</div>
                                 </div>
-
+								
 								<div slot="footer">
-									<Button @click="editModal = false" type="default">Close</Button>
-									<Button @click="editCategory" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Editing..': 'Edit'}}</Button>
+									<Button @click="closeEditModal" type="default">Close</Button>
+									<Button @click="editCategory" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Editing..': 'Ubah Kategori'}}</Button>
 								</div>
 							</Modal>
 
@@ -128,8 +144,8 @@
 				isAdding 		: false,
 				categoryLists	: [],
 				editData 		: {
-									categoryName: '',
-									iconImage	: ','
+									iconImage: '',
+                                    categoryName: '',
 								},
 				index 			: -1,
 				showDeleteModal	: false,
@@ -137,7 +153,9 @@
 				deleteItem 		: {},
 				deletingIndex	: -1,
                 deleteModal		: false,
-                token           : ''
+                token           : '',
+				isIconImageNew	: false,
+				isEditingItem	: false
 
 			}
 		},
@@ -200,9 +218,11 @@
 					id: category.id,
 					categoryName: category.categoryName
 				}
-				this.editData = obj
+				console.log(category)
+				this.editData = category
 				this.editModal = true
 				this.index = index
+				this.isEditingItem = true
 
 			},
 
@@ -226,6 +246,10 @@
 				this.showDeleteModal = true
 			},
             handleSuccess (res, file) {
+				res = `/uploads/${res}`
+				if(this.isEditingItem) {
+					return this.editData.iconImage =res
+				}
                 this.data.iconImage = res
             },
             handleError (res, file) {
@@ -246,16 +270,28 @@
                     desc: 'File  ' + file.name + ' is too large, no more than 2M.'
                 });
             },
-            async deleteImage() {
-                let image = this.data.iconImage
-                this.data.iconImage = '',
-                this.$refs.uploads.clearFiles()
+            async deleteImage(isAdd=true) {
+				if(!isAdd){ //for editing
+					let image
+					this.isIconImageNew = true
+					image = this.editData.iconImage
+					this.editData.iconImage = '',
+					this.$refs.editDataUploads.clearFiles()
+				}else {
+					image = this.data.iconImage
+					this.data.iconImage = '',
+					this.$refs.uploads.clearFiles()
+				}
                 const res = await this.callApi('post', 'app/delete_image', {imageName: image})
                 if(res.status!=200){
                     this.data.iconImage = image
                     this.swr()
                 }
-            }
+            },
+			closeEditModal() {
+				this.isEditingItem = false
+				this.editModal = false
+			}
         },
 
 	async created(){

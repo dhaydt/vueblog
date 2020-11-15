@@ -95,7 +95,6 @@ class AdminController extends Controller
         $this->validate($request, [
         'categoryName' => 'required',
         'iconImage'     => 'required',
-        'id' => 'required',
     ]);
 
     return Category::where('id', $request->id)->update([
