@@ -12,22 +12,26 @@
 						<table class="_table">
 								<!-- TABLE TITLE -->
 							<tr>
-								<th>ID</th>
-								<th>Tag Name</th>
-								<th>Created at</th>
-								<th>Action</th>
+								<th>id</th>
+								<th>Logo</th>
+								<th>Nama Kategori</th>
+								<th>diBuat</th>
+								<th>Pilihan</th>
 							</tr>
 								<!-- TABLE TITLE -->
 
 
 								<!-- ITEMS -->
 							<tr v-for="(category, i) in categoryLists" :key="i" v-if="categoryLists.length">
-								<td>{{tag.id}}</td>
-								<td class="_table_name">{{tag.tagName}}</td>
-								<td>{{tag.created_at}}</td>
+								<td>{{category.id}}</td>
+								<td class="table_image">
+									<img :src="category.iconImage"/>
+								</td>
+								<td class="_table_name">{{category.categoryName}}</td>
+								<td>{{category.created_at}}</td>
 								<td>
-									<Button @click="showEditModal(tag, i)" type="info" size="small">Edit</Button>
-									<Button @click="showDeletingModal(tag, i)" :loading="tag.isDeleting" type="error" size="small" >Delete</Button>
+									<Button @click="showEditModal(category, i)" type="info" size="small">Edit</Button>
+									<Button @click="showDeletingModal(category, i)" :loading="category.isDeleting" type="error" size="small" >Delete</Button>
 								</td>
 							</tr>
 						</table>
@@ -73,15 +77,22 @@
 							<!-- Edit Modal -->
 							<Modal
 								v-model="editModal"
-								title="Edit Tag"
+								title="Edit Kategori"
 								:mask-closable="false"
 								:closable="false"
 								>
-								<Input v-model="editData.tagName" placeholder="Edit Tag Name" style="width: 300px" />
+								<Input v-model="editData.categoryName" placeholder="Edit nama kategori" style="width: 300px" />
+								<div class="space"></div>
+								<div v-model="editData.iconImage" class="demo-upload-list">
+                                    <img :src="`/uploads/${editData.iconImage}`" >
+									<div class="demo-upload-list-cover">
+										<Icon type="ios-trash-outline" @click="deleteImage"></Icon>
+									</div>
+                                </div>
 
 								<div slot="footer">
 									<Button @click="editModal = false" type="default">Close</Button>
-									<Button @click="editTag" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Editing..': 'Edit'}}</Button>
+									<Button @click="editCategory" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Editing..': 'Edit'}}</Button>
 								</div>
 							</Modal>
 
@@ -95,7 +106,7 @@
 									<p>Anda yakin ingin menghapus tag ini?</p>
 								</div>
 								<div slot="footer">
-									<Button type="error" size="large" long :loading="isDeleting" :disabled="isDeleting" @click="deleteTag">Delete</Button>
+									<Button type="error" size="large" long :loading="isDeleting" :disabled="isDeleting" @click="deleteCategory">Delete</Button>
 								</div>
 							</Modal>
 
@@ -117,7 +128,8 @@
 				isAdding 		: false,
 				categoryLists	: [],
 				editData 		: {
-									tagName: ''
+									categoryName: '',
+									iconImage	: ','
 								},
 				index 			: -1,
 				showDeleteModal	: false,
@@ -139,7 +151,7 @@
                 this.data.iconImage = `/uploads/${this.data.iconImage}`
 				const res = await this.callApi('post', 'app/create_category', this.data)
 				if(res.status===201){
-					this.tags.unshift(res.data)
+					this.categoryLists.unshift(res.data)
 					this.s('Kategori berhasil ditambah')
 					this.addModal = false
 					this.data.categoryName = ''
@@ -159,18 +171,22 @@
 				}
 			},
 			//edit data tag
-			async editTag() {
-				if(this.editData.tagName.trim()=='') return this.e('Tag name belum di isi')
-				const res = await this.callApi('post', 'app/edit_tag', this.editData)
+			async editCategory() {
+				if(this.editData.categoryName.trim()=='') return this.e('Nama kategori belum diisi!')
+				if(this.editData.iconImage.trim()=='') return this.e('Logo belum dipilih!')
+				const res = await this.callApi('post', 'app/edit_category', this.editData)
 				if(res.status===200){
-					this.tags[this.index].tagName = this.editData.tagName
-					this.s('Tag berhasil diedit')
+					this.categoryLists[this.index].categoryName = this.editData.categoryName
+					this.s('Kategori berhasil diedit')
 					this.editModal = false
 
 				} else {
 					if(res.status==442){
-						if(res.data.errors.tagName){
-							this.e(res.data.errors.tagName[0])
+						if(res.data.errors.categoryName){
+							this.e(res.data.errors.categoryName[0])
+						}
+						if(res.data.errors.iconImage){
+							this.e(res.data.errors.iconImage[0])
 						}
 					} else {
 						this.swr()
@@ -179,10 +195,10 @@
 			},
 
 
-			showEditModal(tag, index){
+			showEditModal(category, index){
 				let obj = {
-					id: tag.id,
-					tagName: tag.tagName
+					id: category.id,
+					categoryName: category.categoryName
 				}
 				this.editData = obj
 				this.editModal = true
@@ -190,11 +206,11 @@
 
 			},
 
-			async deleteTag() {
+			async deleteCategory() {
 				this.isDeleting = true
-				const res = await this.callApi('post', 'app/delete_tag', this.deleteItem)
+				const res = await this.callApi('post', 'app/delete_category', this.deleteItem)
 				if(res.status===200){
-					this.tags.splice(this.deletingIndex,1)
+					this.categoryLists.splice(this.deletingIndex,1)
 					this.s('Tag berhasil dihapus!')
 
 				}else{
@@ -204,8 +220,8 @@
 				this.showDeleteModal = false
 			},
 
-			showDeletingModal(tag, i){
-				const deleteItem = tag
+			showDeletingModal(category, i){
+				this.deleteItem = category
 				this.deletingIndex = i
 				this.showDeleteModal = true
 			},
