@@ -5,8 +5,8 @@
 
 				<!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
-					<p class="_title0">Categories <Button @click="addModal = true" type="default" size="small">
-                        <Icon type="md-add" /> Add Category</Button> </p>
+					<p class="_title0"><Icon type="ios-grid" />Kategori Blog <Button @click="addModal = true" type="default" size="small">
+                        <Icon type="md-add" /> Kategori</Button> </p>
 
 					<div class="_overflow _table_div">
 						<table class="_table">
@@ -15,7 +15,7 @@
 								<th>id</th>
 								<th>Logo</th>
 								<th>Nama Kategori</th>
-								<th>diBuat</th>
+								<th>dibuat</th>
 								<th>Pilihan</th>
 							</tr>
 								<!-- TABLE TITLE -->
@@ -25,13 +25,19 @@
 							<tr v-for="(category, i) in categoryLists" :key="i" v-if="categoryLists.length">
 								<td>{{category.id}}</td>
 								<td class="table_image">
-									<img :src="category.iconImage"/>
+									<img :src="category.iconImage">
 								</td>
 								<td class="_table_name">{{category.categoryName}}</td>
 								<td>{{category.created_at}}</td>
 								<td>
-									<Button @click="showEditModal(category, i)" type="info" size="small">Edit</Button>
-									<Button @click="showDeletingModal(category, i)" :loading="category.isDeleting" type="error" size="small" >Delete</Button>
+									<Tooltip content="Edit" placement="left-start">
+										<Button @click="showEditModal(category, i)" type="info" size="small"><Icon type="ios-create" /></Button>
+									</Tooltip>
+									<Tooltip content="Hapus" placement="right-start">
+										<Button @click="showDeletingModal(category, i)" :loading="category.isDeleting" type="error" size="small" ><Icon type="ios-trash-outline"></Icon></Button>
+									</Tooltip>
+									
+									
 								</td>
 							</tr>
 						</table>
@@ -70,7 +76,7 @@
                                 </div>
 								<div slot="footer">
 									<Button @click="addModal = false" type="default">Close</Button>
-									<Button @click="addCategory" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Adding..': 'Add'}}</Button>
+									<Button @click="addCategory" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Adding..': 'Tambah'}}</Button>
 								</div>
 							</Modal>
 
@@ -116,13 +122,13 @@
 							<Modal v-model="showDeleteModal" width="360" :closable="true" :mask-closable="false">
 								<p slot="header" style="color:#f60;text-align:center">
 									<Icon type="ios-information-circle"></Icon>
-									<span>Delete Konfirmasi</span>
+									<span>Konfirmasi Hapus</span>
 								</p>
 								<div style="text-align:center">
 									<p>Anda yakin ingin menghapus tag ini?</p>
 								</div>
 								<div slot="footer">
-									<Button type="error" size="large" long :loading="isDeleting" :disabled="isDeleting" @click="deleteCategory">Delete</Button>
+									<Button type="error" size="large" long :loading="isDeleting" :disabled="isDeleting" @click="deleteCategory">Hapus</Button>
 								</div>
 							</Modal>
 
@@ -166,7 +172,7 @@
 			async addCategory() {
 				if(this.data.categoryName.trim()=='') return this.e('Nama Kategori belum di isi')
 				if(this.data.iconImage.trim()=='') return this.e('Gambar icon belum di pilih')
-                this.data.iconImage = `/uploads/${this.data.iconImage}`
+                this.data.iconImage = `${this.data.iconImage}`
 				const res = await this.callApi('post', 'app/create_category', this.data)
 				if(res.status===201){
 					this.categoryLists.unshift(res.data)

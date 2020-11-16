@@ -63,10 +63,10 @@
 						<table class="_table">
 								<!-- TABLE TITLE -->
 							<tr>
-								<th>Date</th>
-								<th>Title</th>
-								<th>Category</th>
-								<th>Action</th>
+								<th>Tanggal</th>
+								<th>Judul</th>
+								<th>Kategori</th>
+								<th>Aksi</th>
 							</tr>
 								<!-- TABLE TITLE -->
 
@@ -74,8 +74,8 @@
 								<!-- ITEMS -->
 							<tr>
 								<td>25-05-19</td>
-								<td class="_table_name">Manhattan's art center "Shed" opening ceremony</td>
-								<td>Economy</td>
+								<td class="_table_name">Menyambut kepulangan Habib Rizieq</td>
+								<td>Kejadian</td>
 								<td>
 									<button class="_btn _action_btn view_btn1" type="button">View</button>
 									<button class="_btn _action_btn edit_btn1" type="button">Edit</button>
@@ -89,8 +89,8 @@
 								<!-- ITEMS -->
 							<tr>
 								<td>25-05-19</td>
-								<td class="_table_name">Are Trump era is having an impact on what 's future voters</td>
-								<td>Social</td>
+								<td class="_table_name">Reauni di Petamburan</td>
+								<td>Sosial</td>
 								<td>
 									<button class="_btn _action_btn view_btn1" type="button">View</button>
 									<button class="_btn _action_btn edit_btn1" type="button">Edit</button>
@@ -104,8 +104,8 @@
 										<!-- ITEMS -->
 							<tr>
 								<td>25-05-19</td>
-								<td class="_table_name">Manhattan's art center "Shed" opening ceremony</td>
-								<td>Economy</td>
+								<td class="_table_name">Persiapan reuni 212 dengan ormas non-muslim</td>
+								<td>Kejadian</td>
 								<td>
 									<button class="_btn _action_btn view_btn1" type="button">View</button>
 									<button class="_btn _action_btn edit_btn1" type="button">Edit</button>
@@ -119,8 +119,8 @@
 								<!-- ITEMS -->
 							<tr>
 								<td>25-05-19</td>
-								<td class="_table_name">Are Trump era is having an impact on what 's future voters</td>
-								<td>Social</td>
+								<td class="_table_name">Kepanikan rezim terpilih 2020</td>
+								<td>Berita</td>
 								<td>
 									<button class="_btn _action_btn view_btn1" type="button">View</button>
 									<button class="_btn _action_btn edit_btn1" type="button">Edit</button>
@@ -134,8 +134,8 @@
 								<!-- ITEMS -->
 							<tr>
 								<td>25-05-19</td>
-								<td class="_table_name">Are Trump era is having an impact on what 's future voters</td>
-								<td>Social</td>
+								<td class="_table_name">Persiapan serangan balik sayap kiri</td>
+								<td>Politik</td>
 								<td>
 									<button class="_btn _action_btn view_btn1" type="button">View</button>
 									<button class="_btn _action_btn edit_btn1" type="button">Edit</button>

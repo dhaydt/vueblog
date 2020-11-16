@@ -2061,6 +2061,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2114,7 +2120,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", _this.e('Gambar icon belum di pilih'));
 
               case 4:
-                _this.data.iconImage = "/uploads/".concat(_this.data.iconImage);
+                _this.data.iconImage = "".concat(_this.data.iconImage);
                 _context.next = 7;
                 return _this.callApi('post', 'app/create_category', _this.data);
 
@@ -2390,6 +2396,11 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -67561,7 +67572,8 @@ var render = function() {
                 "p",
                 { staticClass: "_title0" },
                 [
-                  _vm._v("Categories "),
+                  _c("Icon", { attrs: { type: "ios-grid" } }),
+                  _vm._v("Kategori Blog "),
                   _c(
                     "Button",
                     {
@@ -67574,7 +67586,7 @@ var render = function() {
                     },
                     [
                       _c("Icon", { attrs: { type: "md-add" } }),
-                      _vm._v(" Add Category")
+                      _vm._v(" Kategori")
                     ],
                     1
                   )
@@ -67608,36 +67620,73 @@ var render = function() {
                               "td",
                               [
                                 _c(
-                                  "Button",
+                                  "Tooltip",
                                   {
-                                    attrs: { type: "info", size: "small" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.showEditModal(category, i)
-                                      }
+                                    attrs: {
+                                      content: "Edit",
+                                      placement: "left-start"
                                     }
                                   },
-                                  [_vm._v("Edit")]
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: { type: "info", size: "small" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showEditModal(
+                                              category,
+                                              i
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("Icon", {
+                                          attrs: { type: "ios-create" }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
                                 ),
                                 _vm._v(" "),
                                 _c(
-                                  "Button",
+                                  "Tooltip",
                                   {
                                     attrs: {
-                                      loading: category.isDeleting,
-                                      type: "error",
-                                      size: "small"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.showDeletingModal(
-                                          category,
-                                          i
-                                        )
-                                      }
+                                      content: "Hapus",
+                                      placement: "right-start"
                                     }
                                   },
-                                  [_vm._v("Delete")]
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          loading: category.isDeleting,
+                                          type: "error",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showDeletingModal(
+                                              category,
+                                              i
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("Icon", {
+                                          attrs: { type: "ios-trash-outline" }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
                                 )
                               ],
                               1
@@ -67758,7 +67807,7 @@ var render = function() {
                       },
                       on: { click: _vm.addCategory }
                     },
-                    [_vm._v(_vm._s(_vm.isAdding ? "Adding.." : "Add"))]
+                    [_vm._v(_vm._s(_vm.isAdding ? "Adding.." : "Tambah"))]
                   )
                 ],
                 1
@@ -67920,7 +67969,7 @@ var render = function() {
                 [
                   _c("Icon", { attrs: { type: "ios-information-circle" } }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Delete Konfirmasi")])
+                  _c("span", [_vm._v("Konfirmasi Hapus")])
                 ],
                 1
               ),
@@ -67945,7 +67994,7 @@ var render = function() {
                       },
                       on: { click: _vm.deleteCategory }
                     },
-                    [_vm._v("Delete")]
+                    [_vm._v("Hapus")]
                   )
                 ],
                 1
@@ -67970,7 +68019,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Nama Kategori")]),
       _vm._v(" "),
-      _c("th", [_vm._v("diBuat")]),
+      _c("th", [_vm._v("dibuat")]),
       _vm._v(" "),
       _c("th", [_vm._v("Pilihan")])
     ])
@@ -68014,7 +68063,8 @@ var render = function() {
                 "p",
                 { staticClass: "_title0" },
                 [
-                  _vm._v("Tags "),
+                  _c("Icon", { attrs: { type: "md-pricetags" } }),
+                  _vm._v(" Tags  \n\t\t\t\t\t\t"),
                   _c(
                     "Button",
                     {
@@ -68025,10 +68075,7 @@ var render = function() {
                         }
                       }
                     },
-                    [
-                      _c("Icon", { attrs: { type: "md-add" } }),
-                      _vm._v(" Add tag")
-                    ],
+                    [_c("Icon", { attrs: { type: "md-add" } }), _vm._v(" Tag")],
                     1
                   )
                 ],
@@ -68057,33 +68104,67 @@ var render = function() {
                               "td",
                               [
                                 _c(
-                                  "Button",
+                                  "Tooltip",
                                   {
-                                    attrs: { type: "info", size: "small" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.showEditModal(tag, i)
-                                      }
+                                    attrs: {
+                                      content: "Edit",
+                                      placement: "left-start"
                                     }
                                   },
-                                  [_vm._v("Edit")]
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: { type: "info", size: "small" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showEditModal(tag, i)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("Icon", {
+                                          attrs: { type: "ios-create" }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
                                 ),
                                 _vm._v(" "),
                                 _c(
-                                  "Button",
+                                  "Tooltip",
                                   {
                                     attrs: {
-                                      loading: tag.isDeleting,
-                                      type: "error",
-                                      size: "small"
-                                    },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.showDeletingModal(tag, i)
-                                      }
+                                      content: "Hapus",
+                                      placement: "right-start"
                                     }
                                   },
-                                  [_vm._v("Delete")]
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          loading: tag.isDeleting,
+                                          type: "error",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showDeletingModal(tag, i)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("Icon", {
+                                          attrs: { type: "ios-trash-outline" }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
                                 )
                               ],
                               1
@@ -68101,7 +68182,7 @@ var render = function() {
           _c(
             "Modal",
             {
-              attrs: { title: "Add New Tag", "mask-closable": false },
+              attrs: { title: "Tambah Tag Baru", "mask-closable": false },
               model: {
                 value: _vm.addModal,
                 callback: function($$v) {
@@ -68113,7 +68194,7 @@ var render = function() {
             [
               _c("Input", {
                 staticStyle: { width: "300px" },
-                attrs: { placeholder: "Tag Name" },
+                attrs: { placeholder: "Nama Tag" },
                 model: {
                   value: _vm.data.tagName,
                   callback: function($$v) {
@@ -68150,7 +68231,7 @@ var render = function() {
                       },
                       on: { click: _vm.addTag }
                     },
-                    [_vm._v(_vm._s(_vm.isAdding ? "Adding.." : "Add"))]
+                    [_vm._v(_vm._s(_vm.isAdding ? "Adding.." : "Tambah"))]
                   )
                 ],
                 1
@@ -68247,7 +68328,7 @@ var render = function() {
                 [
                   _c("Icon", { attrs: { type: "ios-information-circle" } }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Delete Konfirmasi")])
+                  _c("span", [_vm._v("Konfirmasi Hapus")])
                 ],
                 1
               ),
@@ -68272,7 +68353,7 @@ var render = function() {
                       },
                       on: { click: _vm.deleteTag }
                     },
-                    [_vm._v("Delete")]
+                    [_vm._v("Hapus")]
                   )
                 ],
                 1
@@ -68293,11 +68374,11 @@ var staticRenderFns = [
     return _c("tr", [
       _c("th", [_vm._v("ID")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Tag Name")]),
+      _c("th", [_vm._v("Nama Tag")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Created at")]),
+      _c("th", [_vm._v("dibuat")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Action")])
+      _c("th", [_vm._v("Aksi")])
     ])
   }
 ]
@@ -68333,7 +68414,7 @@ var render = function() {
               { staticStyle: { "text-align": "center" } },
               [
                 _c("Icon", { attrs: { type: "logo-github" } }),
-                _vm._v("VUE-BLOG")
+                _vm._v("VUE-BLOG-CREATOR")
               ],
               1
             )
@@ -68411,7 +68492,7 @@ var render = function() {
                         { attrs: { to: "cat" } },
                         [
                           _c("Icon", { attrs: { type: "ios-apps" } }),
-                          _vm._v(" Category")
+                          _vm._v(" Kategori")
                         ],
                         1
                       )
@@ -68693,23 +68774,23 @@ var staticRenderFns = [
         _c("div", { staticClass: "_overflow _table_div" }, [
           _c("table", { staticClass: "_table" }, [
             _c("tr", [
-              _c("th", [_vm._v("Date")]),
+              _c("th", [_vm._v("Tanggal")]),
               _vm._v(" "),
-              _c("th", [_vm._v("Title")]),
+              _c("th", [_vm._v("Judul")]),
               _vm._v(" "),
-              _c("th", [_vm._v("Category")]),
+              _c("th", [_vm._v("Kategori")]),
               _vm._v(" "),
-              _c("th", [_vm._v("Action")])
+              _c("th", [_vm._v("Aksi")])
             ]),
             _vm._v(" "),
             _c("tr", [
               _c("td", [_vm._v("25-05-19")]),
               _vm._v(" "),
               _c("td", { staticClass: "_table_name" }, [
-                _vm._v('Manhattan\'s art center "Shed" opening ceremony')
+                _vm._v("Menyambut kepulangan Habib Rizieq")
               ]),
               _vm._v(" "),
-              _c("td", [_vm._v("Economy")]),
+              _c("td", [_vm._v("Kejadian")]),
               _vm._v(" "),
               _c("td", [
                 _c(
@@ -68763,12 +68844,10 @@ var staticRenderFns = [
               _c("td", [_vm._v("25-05-19")]),
               _vm._v(" "),
               _c("td", { staticClass: "_table_name" }, [
-                _vm._v(
-                  "Are Trump era is having an impact on what 's future voters"
-                )
+                _vm._v("Reauni di Petamburan")
               ]),
               _vm._v(" "),
-              _c("td", [_vm._v("Social")]),
+              _c("td", [_vm._v("Sosial")]),
               _vm._v(" "),
               _c("td", [
                 _c(
@@ -68822,10 +68901,10 @@ var staticRenderFns = [
               _c("td", [_vm._v("25-05-19")]),
               _vm._v(" "),
               _c("td", { staticClass: "_table_name" }, [
-                _vm._v('Manhattan\'s art center "Shed" opening ceremony')
+                _vm._v("Persiapan reuni 212 dengan ormas non-muslim")
               ]),
               _vm._v(" "),
-              _c("td", [_vm._v("Economy")]),
+              _c("td", [_vm._v("Kejadian")]),
               _vm._v(" "),
               _c("td", [
                 _c(
@@ -68879,12 +68958,10 @@ var staticRenderFns = [
               _c("td", [_vm._v("25-05-19")]),
               _vm._v(" "),
               _c("td", { staticClass: "_table_name" }, [
-                _vm._v(
-                  "Are Trump era is having an impact on what 's future voters"
-                )
+                _vm._v("Kepanikan rezim terpilih 2020")
               ]),
               _vm._v(" "),
-              _c("td", [_vm._v("Social")]),
+              _c("td", [_vm._v("Berita")]),
               _vm._v(" "),
               _c("td", [
                 _c(
@@ -68938,12 +69015,10 @@ var staticRenderFns = [
               _c("td", [_vm._v("25-05-19")]),
               _vm._v(" "),
               _c("td", { staticClass: "_table_name" }, [
-                _vm._v(
-                  "Are Trump era is having an impact on what 's future voters"
-                )
+                _vm._v("Persiapan serangan balik sayap kiri")
               ]),
               _vm._v(" "),
-              _c("td", [_vm._v("Social")]),
+              _c("td", [_vm._v("Politik")]),
               _vm._v(" "),
               _c("td", [
                 _c(

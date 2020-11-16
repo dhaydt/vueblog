@@ -5,16 +5,17 @@
 
 				<!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
-					<p class="_title0">Tags <Button @click="addModal = true" type="default" size="small"><Icon type="md-add" /> Add tag</Button> </p>
+					<p class="_title0"><Icon type="md-pricetags" /> Tags  
+						<Button @click="addModal = true" type="default" size="small"><Icon type="md-add" /> Tag</Button> </p>
 
 					<div class="_overflow _table_div">
 						<table class="_table">
 								<!-- TABLE TITLE -->
 							<tr>
 								<th>ID</th>
-								<th>Tag Name</th>
-								<th>Created at</th>
-								<th>Action</th>
+								<th>Nama Tag</th>
+								<th>dibuat</th>
+								<th>Aksi</th>
 							</tr>
 								<!-- TABLE TITLE -->
 
@@ -25,8 +26,12 @@
 								<td class="_table_name">{{tag.tagName}}</td>
 								<td>{{tag.created_at}}</td>
 								<td>
-									<Button @click="showEditModal(tag, i)" type="info" size="small">Edit</Button>
-									<Button @click="showDeletingModal(tag, i)" :loading="tag.isDeleting" type="error" size="small" >Delete</Button>
+									<Tooltip content="Edit" placement="left-start">
+										<Button @click="showEditModal(tag, i)" type="info" size="small"><Icon type="ios-create" /></Button>
+									</Tooltip>
+									<Tooltip content="Hapus" placement="right-start">
+										<Button @click="showDeletingModal(tag, i)" :loading="tag.isDeleting" type="error" size="small" ><Icon type="ios-trash-outline"></Icon></Button>
+									</Tooltip>
 								</td>
 							</tr>
 						</table>
@@ -35,14 +40,14 @@
 							<!-- ADD MODAL -->
 							<Modal
 								v-model="addModal"
-								title="Add New Tag"
+								title="Tambah Tag Baru"
 								:mask-closable=false
 								>
-								<Input v-model="data.tagName" placeholder="Tag Name" style="width: 300px" />
+								<Input v-model="data.tagName" placeholder="Nama Tag" style="width: 300px" />
 
 								<div slot="footer">
 									<Button @click="addModal = false" type="default">Close</Button>
-									<Button @click="addTag" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Adding..': 'Add'}}</Button>
+									<Button @click="addTag" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Adding..': 'Tambah'}}</Button>
 								</div>
 							</Modal>
 
@@ -65,13 +70,13 @@
 							<Modal v-model="showDeleteModal" width="360" :closable="true" :mask-closable="false">
 								<p slot="header" style="color:#f60;text-align:center">
 									<Icon type="ios-information-circle"></Icon>
-									<span>Delete Konfirmasi</span>
+									<span>Konfirmasi Hapus</span>
 								</p>
 								<div style="text-align:center">
 									<p>Anda yakin ingin menghapus tag ini?</p>
 								</div>
 								<div slot="footer">
-									<Button type="error" size="large" long :loading="isDeleting" :disabled="isDeleting" @click="deleteTag">Delete</Button>
+									<Button type="error" size="large" long :loading="isDeleting" :disabled="isDeleting" @click="deleteTag">Hapus</Button>
 								</div>
 							</Modal>
 
