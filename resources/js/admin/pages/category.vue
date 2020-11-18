@@ -53,7 +53,6 @@
 								<Input v-model="data.categoryName" placeholder="Nama Kategori" />
                                 <div class="space"></div>
                                 <Upload
-                                    multiple
                                     ref="uploads"
                                     type="drag"
                                     :headers="{'x-csrf-token' : token, 'X-Requested-With' : 'XMLHttpRequest'}"
@@ -255,8 +254,8 @@
 				res = `/uploads/${res}`
 				if(this.isEditingItem) {
 					return this.editData.iconImage =res
-				}
-                this.data.iconImage = res
+				} else {this.data.iconImage = res}
+                
             },
             handleError (res, file) {
                 this.$Notice.warning({
