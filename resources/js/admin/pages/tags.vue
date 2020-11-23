@@ -67,7 +67,7 @@
 							</Modal>
 
 							<!-- Delete Modal -->
-							<Modal v-model="showDeleteModal" width="360" :closable="true" :mask-closable="false">
+							<!-- <Modal v-model="showDeleteModal" width="360" :closable="true" :mask-closable="false">
 								<p slot="header" style="color:#f60;text-align:center">
 									<Icon type="ios-information-circle"></Icon>
 									<span>Konfirmasi Hapus</span>
@@ -78,7 +78,8 @@
 								<div slot="footer">
 									<Button type="error" size="large" long :loading="isDeleting" :disabled="isDeleting" @click="deleteTag">Hapus</Button>
 								</div>
-							</Modal>
+							</Modal> -->
+							<deleteModal></deleteModal>
 
 			</div>
 	</div>
@@ -86,6 +87,8 @@
 </template>
 
 <script>
+import deleteModal from "../components/deleteModal.vue";
+import {mapGetters} from 'vuex'
 	export default {
 		data() {
 			return{
@@ -104,7 +107,7 @@
 				isDeleting 		: false,
 				deleteItem 		: {},
 				deletingIndex	: -1,
-                deleteModal		: false,
+				websiteSetting : [],
 
 			}
 		},
@@ -177,9 +180,19 @@
 			},
 
 			showDeletingModal(tag, i){
-				this.deleteItem = tag
-				this.deletingIndex = i
-				this.showDeleteModal = true
+				const deleteModalObj = {
+					showDeleteModal : true,
+					deleteUrl : 'app/delete_tag',
+					data : tag,
+					deletingIndex : i,
+					isDeleted : false,
+				}
+				this.$store.commit('setDeletingModalObj', deleteModalObj)
+				console.log('delete modal active')
+
+				// this.deleteItem = tag
+				// this.deletingIndex = i
+				// this.showDeleteModal = true
 			}
 		},
 
@@ -191,5 +204,18 @@
 			this.swr()
 		}
 	},
+	components : {
+		deleteModal
+	},
+	computed : {
+		...mapGetters(['getDeleteModalObj'])
+	},
+	watch : {
+		getDeleteModalObj(obj) {
+			if(obj.isDeleted){
+				this.tags.splice(obj.deletingIndex, 1)
+			}
+		}
 	}
+};
 </script>

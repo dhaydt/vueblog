@@ -1,15 +1,17 @@
 import Vue from 'vue'
-import vuex from 'vuex'
+import Vuex from 'vuex'
 
-Vue.use(vuex);
+Vue.use(Vuex);
 
-export default new vuex.Store({
+export default new Vuex.Store({
     state : {
         counter: 1000,
         deleteModalObj : {
             showDeleteModal : false,
             deleteUrl : '',
-            data : null
+            data : null,
+            deletingIndex	: -1,
+            isDeleted : false,
         }
     },
 
@@ -26,7 +28,21 @@ export default new vuex.Store({
     mutations : {
         changeTheCounter(state, data) {
             state.counter += data
-        }
+        },
+        setDeleteModal(state, data){
+            const deleteModalObj = {
+                showDeleteModal : false,
+                deleteUrl : '',
+                data : null,
+                deletingIndex : -1,
+                isDeleted : data,
+            }
+            state.deleteModalObj.isDeleted = true
+        },
+        setDeletingModalObj(state, data) {
+            state.deleteModalObj = data
+        },
+
     },
 
     actions : {

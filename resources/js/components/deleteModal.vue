@@ -14,8 +14,8 @@
 				<p>{{getDeleteModalObj.msg}}</p>
 			</div>
 			<div slot="footer">
-	                <Button type="default" size="large" @click="closeModal" >Close</Button>
-	                <Button type="error" size="large"  :loading="isDeleing" :disabled="isDeleing" @click="deleteTag" >Delete</Button>
+				<Button type="default" size="large" @click="closeModal" >Close</Button>
+				<Button type="error" size="large"  :loading="isDeleting" :disabled="isDeleting" @click="deleteTag" >Delete</Button>
             </div>
 		</Modal>
 	</div>
@@ -46,6 +46,10 @@
 			closeModal(){
 				this.$store.commit('setDeleteModal', false)
 			}
+		},
+
+		computed : {
+			...mapGetters(['getDeleteModalObj'])
 		}
 	}
 </script>

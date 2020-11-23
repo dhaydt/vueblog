@@ -116,51 +116,39 @@
 									<Button @click="editCategory" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Editing..': 'Ubah Kategori'}}</Button>
 								</div>
 							</Modal>
-
-							<!-- Delete Modal -->
-							<Modal v-model="showDeleteModal" width="360" :closable="true" :mask-closable="false">
-								<p slot="header" style="color:#f60;text-align:center">
-									<Icon type="ios-information-circle"></Icon>
-									<span>Konfirmasi Hapus</span>
-								</p>
-								<div style="text-align:center">
-									<p>Anda yakin ingin menghapus tag ini?</p>
-								</div>
-								<div slot="footer">
-									<Button type="error" size="large" long :loading="isDeleting" :disabled="isDeleting" @click="deleteCategory">Hapus</Button>
-								</div>
-							</Modal>
-
+							<deleteModal></deleteModal>
 			</div>
-	</div>
+		</div>
     </div>
 </template>
 
 <script>
+import deleteModal from "../components/deleteModal.vue";
+import { mapGetters} from "vuex";
 	export default {
 		data() {
 			return{
 				data 			: {
-									iconImage: '',
-                                    categoryName: '',
+									iconImage: "",
+                                    categoryName: "",
 								},
 				addModal 		: false,
 				editModal 		: false,
 				isAdding 		: false,
 				categoryLists	: [],
 				editData 		: {
-									iconImage: '',
-                                    categoryName: '',
+									iconImage: "",
+                                    categoryName: "",
 								},
 				index 			: -1,
 				showDeleteModal	: false,
 				isDeleting 		: false,
 				deleteItem 		: {},
 				deletingIndex	: -1,
-                deleteModal		: false,
-                token           : '',
+                token           : "",
 				isIconImageNew	: false,
-				isEditingItem	: false
+				isEditingItem	: false,
+				websiteSettings	: []
 
 			}
 		},
@@ -230,25 +218,19 @@
 				this.isEditingItem = true
 
 			},
-
-			async deleteCategory() {
-				this.isDeleting = true
-				const res = await this.callApi('post', 'app/delete_category', this.deleteItem)
-				if(res.status===200){
-					this.categoryLists.splice(this.deletingIndex,1)
-					this.s('Tag berhasil dihapus!')
-
-				}else{
-					this.swr()
-				}
-				this.isDeleting = false
-				this.showDeleteModal = false
-			},
-
 			showDeletingModal(category, i){
-				this.deleteItem = category
-				this.deletingIndex = i
-				this.showDeleteModal = true
+				const deleteModalObj = {
+					showDeleteModal : true,
+					deleteUrl : 'app/delete_category',
+					data : category,
+					deletingIndex : i,
+					isDeleted : false,
+				}
+				this.$store.commit('setDeletingModalObj', deleteModalObj);
+				console.log('delete modal active')
+				// this.deleteItem = category
+				// this.deletingIndex = i
+				// this.showDeleteModal = true
 			},
             handleSuccess (res, file) {
 				res = `/uploads/${res}`
@@ -308,5 +290,19 @@
 			this.swr()
 		}
 	},
+
+	components : {
+		deleteModal
+	},
+	computed : {
+		...mapGetters(["getDeleteModalObj"])
+	},
+	watch : {
+		getDeleteModalObj(obj) {
+			if (obj.isDeleted) {
+				this.categoryLists.splice(obj.deletingIndex, 1);
+			}
+		}
 	}
+};
 </script>
