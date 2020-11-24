@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state : {
-        counter: 1000,
+        //counter: 1000,
         deleteModalObj : {
             showDeleteModal : false,
             deleteUrl : '',
@@ -26,9 +26,9 @@ export default new Vuex.Store({
     },
 
     mutations : {
-        changeTheCounter(state, data) {
-            state.counter += data
-        },
+        // changeTheCounter(state, data) {
+        //     state.counter += data
+        // },
         setDeleteModal(state, data){
             const deleteModalObj = {
                 showDeleteModal : false,
@@ -46,9 +46,9 @@ export default new Vuex.Store({
     },
 
     actions : {
-        changeCounterAction({commit}, data){
-            commit('changeTheCounter', data)
-        }
+        // changeCounterAction({commit}, data){
+        //     commit('changeTheCounter', data)
+        // }
     }
 
 });

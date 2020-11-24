@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tag;
 use App\Models\Category;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -109,5 +110,10 @@ class AdminController extends Controller
             'id' => 'required',
         ]);
         return Category::where('id', $request->id)->delete();
+    }
+
+    public function getUser()
+    {
+    return User::orderBy('id', 'desc')->get();
     }
 }

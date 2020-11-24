@@ -5,7 +5,7 @@
 
 				<!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
-					<p class="_title0"><Icon type="md-pricetags" /> Tags  
+					<p class="_title0"><Icon type="md-pricetags" /> Tags
 						<Button @click="addModal = true" type="default" size="small"><Icon type="md-add" /> Tag</Button> </p>
 
 					<div class="_overflow _table_div">
@@ -185,7 +185,9 @@ import {mapGetters} from 'vuex'
 					deleteUrl : 'app/delete_tag',
 					data : tag,
 					deletingIndex : i,
-					isDeleted : false,
+                    isDeleted : false,
+                    msg : 'Yakin ingin menghapus Tag ini?',
+                    successMsg : 'Tag terhapus'
 				}
 				this.$store.commit('setDeletingModalObj', deleteModalObj)
 				console.log('delete modal active')

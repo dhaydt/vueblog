@@ -27,6 +27,8 @@ Route::post('app/get_category', [AdminController::class, 'getCategory']);
 Route::post('app/delete_category', [AdminController::class, 'deleteCategory']);
 Route::post('app/edit_category', [AdminController::class, 'editCategory']);
 
+Route::post('app/get_user', [AdminController::class, 'getUser']);
+
 
 
 

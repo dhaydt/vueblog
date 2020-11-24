@@ -9,6 +9,7 @@ import hook from './components/pages/basic/hooks.vue'
 import home from './components/pages/home.vue'
 import tags from './admin/pages/tags.vue'
 import category from './admin/pages/category.vue'
+import user from './admin/pages/adminusers.vue'
 import usecom from './vuex/usecom.vue'
 
 Vue.use(Router);
@@ -26,6 +27,10 @@ const routes = [
     {
         path: '/cat',
         component: category
+    },
+    {
+        path: '/admin',
+        component: user
     },
     {
         path: '/use',

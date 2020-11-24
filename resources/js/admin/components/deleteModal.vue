@@ -24,7 +24,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import deleteModalVue from '../../components/deleteModal.vue'
+
 	export default {
 		data() {
 			return {
