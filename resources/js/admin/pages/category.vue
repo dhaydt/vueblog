@@ -34,10 +34,11 @@
 										<Button @click="showEditModal(category, i)" type="info" size="small"><Icon type="ios-create" /></Button>
 									</Tooltip>
 									<Tooltip content="Hapus" placement="right-start">
-										<Button @click="showDeletingModal(category, i)" :loading="category.isDeleting" type="error" size="small" ><Icon type="ios-trash-outline"></Icon></Button>
+										<Button @click="showDeletingModal(category, i)"
+                                        :loading="category.isDeleting"
+                                        type="error" size="small" >
+                                        <Icon type="ios-trash-outline"></Icon></Button>
 									</Tooltip>
-									
-									
 								</td>
 							</tr>
 						</table>
@@ -110,7 +111,7 @@
 										<Icon type="ios-trash-outline" @click="deleteImage(false)"></Icon>
 									</div>
                                 </div>
-								
+
 								<div slot="footer">
 									<Button @click="closeEditModal" type="default">Close</Button>
 									<Button @click="editCategory" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Editing..': 'Ubah Kategori'}}</Button>
@@ -224,7 +225,9 @@ import { mapGetters} from "vuex";
 					deleteUrl : 'app/delete_category',
 					data : category,
 					deletingIndex : i,
-					isDeleted : false,
+                    isDeleted : false,
+                    msg : 'Yakin ingin menghapus Kategori ini?',
+                    successMsg : 'Kategori terhapus'
 				}
 				this.$store.commit('setDeletingModalObj', deleteModalObj);
 				console.log('delete modal active')
@@ -235,9 +238,12 @@ import { mapGetters} from "vuex";
             handleSuccess (res, file) {
 				res = `/uploads/${res}`
 				if(this.isEditingItem) {
-					return this.editData.iconImage =res
-				} else {this.data.iconImage = res}
-                
+                    console.log("inside")
+					return (this.editData.iconImage = res);
+                }
+                console.log(res)
+                this.data.iconImage = res;
+
             },
             handleError (res, file) {
                 this.$Notice.warning({
@@ -258,8 +264,9 @@ import { mapGetters} from "vuex";
                 });
             },
             async deleteImage(isAdd=true) {
-				if(!isAdd){ //for editing
-					let image
+                let image;
+                if(!isAdd){
+                    //for editing
 					this.isIconImageNew = true
 					image = this.editData.iconImage
 					this.editData.iconImage = '',

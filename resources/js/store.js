@@ -37,7 +37,7 @@ export default new Vuex.Store({
                 deletingIndex : -1,
                 isDeleted : data,
             }
-            state.deleteModalObj.isDeleted = true
+            state.deleteModalObj = deleteModalObj
         },
         setDeletingModalObj(state, data) {
             state.deleteModalObj = data

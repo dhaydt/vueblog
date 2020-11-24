@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!-- delete alert modal -->
-		<Modal 
+		<Modal
 			:value="getDeleteModalObj.showDeleteModal"
 			:mask-closable="false"
 			:closable="false"
@@ -24,6 +24,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import deleteModalVue from '../../components/deleteModal.vue'
 	export default {
 		data() {
 			return {
@@ -35,14 +36,14 @@ import {mapGetters} from 'vuex'
 				this.isDeleting = true
 				const res = await this.callApi('post', this.getDeleteModalObj.deleteUrl, this.getDeleteModalObj.data)
 				if(res.status===200){
-					this.s(this.getDeleteModalObj.succesMsg)
+					this.s(this.getDeleteModalObj.successMsg)
 					this.$store.commit('setDeleteModal', true)
 
 				}else{
 					this.swr()
 					this.$store.commit('setDeleteModal', false)
 				}
-				this.isDeleting = false
+                this.isDeleting = false
 
 			},
 			closeModal() {

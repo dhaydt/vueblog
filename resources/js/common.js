@@ -19,31 +19,31 @@ export default {
 			}
 		},
 
-		i(desc, title="hey") {
+		i(desc, title="Info!!") {
             this.$Notice.info({
                 title: title,
                 desc: desc
             });
         },
-        s(desc, title="berhasil") {
+        s(desc, title="Berhasil!!") {
             this.$Notice.success({
                 title: title,
                 desc: desc
             });
         },
-        w(desc, title="awas") {
+        w(desc, title="Hati-Hati!!") {
             this.$Notice.warning({
                 title: title,
                 desc: desc
             });
         },
-        e(desc, title="Astagfirullah") {
+        e(desc, title="Astagfirullah!!") {
             this.$Notice.error({
                 title: title,
                 desc: desc
             });
         },
-        swr(desc="Sesuatu ada salah!!", title="wrong") {
+        swr(desc="Sesuatu ada salah!!", title="Wrong!!") {
             this.$Notice.error({
                 title: title,
                 desc: desc
