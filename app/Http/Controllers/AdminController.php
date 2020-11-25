@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tag;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Role;
 
 class AdminController extends Controller
 {
@@ -115,5 +116,66 @@ class AdminController extends Controller
     public function getUser()
     {
     return User::orderBy('id', 'desc')->get();
+    }
+    
+    public function getRoles()
+    {
+        return Role::all();
+    }
+
+    // public function assignRole(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'permission' => 'required',
+    //         'id' => 'required',
+    //     ]);
+    //     return Role::where('id', $request->id)->update([
+    //         'permission' => $request->permission,
+    //     ]);
+    // }
+
+    public function createUser(Request $request){
+        {
+            $this->validate($request, [
+            'FullName'  => 'required',
+            'email'     => 'required',//'bail|required|email',
+            'sandi'     => 'required',//'bail|required|min:2',
+            'userType'     => 'required',
+            ]);
+            //$password = bcrypt($request->password);
+            $user = User::create([
+                'FullName' => $request->FullName,
+                'email' => $request->email,
+                'sandi' => $request->sandi,
+                'userType' => $request->userType,
+            ]);
+            return $user;
+    
+        }
+    }
+
+    public function editUser(Request $request)
+    {
+    $this->validate($request, [
+        'FullName' => 'required',
+        'id' => 'required',
+        'email' => 'required',
+        'sandi' => 'required',
+        'userType' => 'required',
+    ]);
+    return User::where('id', $request->id)->update([
+        'FullName' => $request->FullName,
+        'email' => $request->email,
+        'sandi' => $request->sandi,
+        'userType' => $request->userType,
+    ]);
+    }
+
+    public function deleteUser(Request $request)
+    {
+            $this->validate($request, [
+            'id' => 'required',
+        ]);
+        return User::where('id', $request->id)->delete();
     }
 }

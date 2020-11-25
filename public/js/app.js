@@ -2023,7 +2023,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_deleteModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/deleteModal */ "./resources/js/admin/components/deleteModal.vue");
 
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -2079,46 +2099,330 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       data: {
         FullName: '',
         email: '',
-        password: '',
-        role_id: null
+        sandi: '',
+        userType: '' //role_id: null
+
       },
-      users: []
+      addModal: false,
+      editModal: false,
+      isAdding: false,
+      users: [],
+      editData: {
+        FullName: '',
+        email: '',
+        sandi: '',
+        userType: ''
+      },
+      index: -1,
+      showDeleteModal: false,
+      isDeleting: false,
+      deleteItem: {},
+      deletingIndex: -1,
+      websiteSetting: [],
+      roles: []
     };
   },
+  methods: {
+    addAdmin: function addAdmin() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var res, i;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(_this.data.FullName.trim() == '')) {
+                  _context.next = 2;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.e(' name is required'));
+
+              case 2:
+                if (!(_this.data.email.trim() == '')) {
+                  _context.next = 4;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.e('Email is required'));
+
+              case 4:
+                if (!(_this.data.sandi.trim() == '')) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.e('sandi is required'));
+
+              case 6:
+                if (!(_this.data.userType.trim() == '')) {
+                  _context.next = 8;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.e(' type  is required'));
+
+              case 8:
+                _context.next = 10;
+                return _this.callApi('post', 'app/create_user', _this.data);
+
+              case 10:
+                res = _context.sent;
+
+                if (res.status === 201) {
+                  _this.users.unshift(res.data);
+
+                  _this.s('Admin user has been added successfully!');
+
+                  _this.addModal = false;
+                  _this.data.FullName = '';
+                  _this.data.email = '';
+                  _this.data.sandi = '';
+                  _this.data.userType = '';
+                } else {
+                  if (res.status == 422) {
+                    for (i in res.data.errors) {
+                      _this.e(res.data.errors[i][0]);
+                    }
+                  } else {
+                    _this.swr();
+                  }
+                }
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    //edit data tag
+    editAdmin: function editAdmin() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var res, i;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(_this2.editData.FullName.trim() == '')) {
+                  _context2.next = 2;
+                  break;
+                }
+
+                return _context2.abrupt("return", _this2.e('Nama diisi dulu!'));
+
+              case 2:
+                if (!(_this2.editData.email.trim() == '')) {
+                  _context2.next = 4;
+                  break;
+                }
+
+                return _context2.abrupt("return", _this2.e('Email belum di isi'));
+
+              case 4:
+                if (!(_this2.editData.sandi == '')) {
+                  _context2.next = 6;
+                  break;
+                }
+
+                return _context2.abrupt("return", _this2.e('sandi belum di isi'));
+
+              case 6:
+                if (!(_this2.editData.userType.trim() == '')) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                return _context2.abrupt("return", _this2.e('Tipe user belum di isi'));
+
+              case 8:
+                _context2.next = 10;
+                return _this2.callApi('post', 'app/edit_user', _this2.editData);
+
+              case 10:
+                res = _context2.sent;
+
+                if (res.status === 200) {
+                  _this2.users[_this2.index] = _this2.editData;
+
+                  _this2.s('Admin berhasil diedit');
+
+                  _this2.editModal = false;
+                } else {
+                  if (res.status == 442) {
+                    for (i in res.data.errors) {
+                      _this2.e(res.data.errors[i][0]);
+                    }
+                  } else {
+                    _this2.swr();
+                  }
+                }
+
+              case 12:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    showEditModal: function showEditModal(user, index) {
+      var obj = {
+        id: user.id,
+        FullName: user.FullName,
+        email: user.email,
+        sandi: user.sandi,
+        userType: user.userType
+      };
+      this.editData = obj;
+      this.editModal = true;
+      this.index = index;
+    },
+    showDeletingModal: function showDeletingModal(user, i) {
+      var deleteModalObj = {
+        showDeleteModal: true,
+        deleteUrl: 'app/delete_user',
+        data: user,
+        deletingIndex: i,
+        isDeleted: false,
+        msg: 'Yakin ingin menghapus User ini?',
+        successMsg: 'User terhapus'
+      };
+      this.$store.commit('setDeletingModalObj', deleteModalObj);
+      console.log('delete modal active'); // this.deleteItem = category
+      // this.deletingIndex = i
+      // this.showDeleteModal = true
+    }
+  },
   created: function created() {
-    var _this = this;
+    var _this3 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var _yield$Promise$all, _yield$Promise$all2, res, resRole;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
-              _context.next = 2;
-              return _this.callApi('get', 'app/get_user');
+              _this3.token = window.Laravel.csrfToken;
+              _context3.next = 3;
+              return Promise.all([_this3.callApi('get', 'app/get_users'), _this3.callApi('get', 'app/get_roles')]);
 
-            case 2:
-              res = _context.sent;
+            case 3:
+              _yield$Promise$all = _context3.sent;
+              _yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 2);
+              res = _yield$Promise$all2[0];
+              resRole = _yield$Promise$all2[1];
 
               if (res.status == 200) {
-                _this.users = res.data;
+                _this3.users = res.data;
               } else {
-                _this.swr();
+                _this3.swr();
               }
 
-            case 4:
+              if (resRole.status == 200) {
+                _this3.roles = resRole.data;
+              } else {
+                _this3.swr();
+              }
+
+            case 9:
             case "end":
-              return _context.stop();
+              return _context3.stop();
           }
         }
-      }, _callee);
+      }, _callee3);
     }))();
+  },
+  components: {
+    deleteModal: _components_deleteModal__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["getDeleteModalObj"])),
+  watch: {
+    getDeleteModalObj: function getDeleteModalObj(obj) {
+      if (obj.isDeleted) {
+        this.users.splice(obj.deletingIndex, 1);
+      }
+    }
   }
 });
 
@@ -2343,7 +2647,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this.addModal = false;
                   _this.data.categoryName = '';
-                  _this.data.iconImage = '';
+                  _this.data.iconImage = ''; //this.$refs.upload.clearFiles()
                 } else {
                   if (res.status == 442) {
                     if (res.data.errors.categoryName) {
@@ -2460,7 +2764,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return this.editData.iconImage = res;
       }
 
-      console.log(res);
       this.data.iconImage = res;
     },
     handleError: function handleError(res, file) {
@@ -85943,139 +86246,426 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "content" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20"
-          },
-          [
-            _c(
-              "p",
-              { staticClass: "_title0" },
-              [
-                _vm._v("Admin Pages "),
-                _c(
-                  "Button",
-                  {
-                    on: {
-                      click: function($event) {
-                        _vm.addModal = true
-                      }
-                    }
-                  },
-                  [
-                    _c("Icon", { attrs: { type: "md-add" } }),
-                    _vm._v(" Add admin")
-                  ],
-                  1
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "_overflow _table_div" }, [
+      _c(
+        "div",
+        { staticClass: "container-fluid" },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20"
+            },
+            [
               _c(
-                "table",
-                { staticClass: "_table" },
+                "p",
+                { staticClass: "_title0" },
                 [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _vm._l(_vm.users, function(user, i) {
-                    return _vm.users.length
-                      ? _c("tr", { key: i }, [
-                          _c("td", [_vm._v(_vm._s(user.id))]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "_table_name" }, [
-                            _vm._v(_vm._s(user.FullName))
-                          ]),
-                          _vm._v(" "),
-                          _c("td", {}, [_vm._v(_vm._s(user.email))]),
-                          _vm._v(" "),
-                          _c("td", {}, [_vm._v(_vm._s(user.userType))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(user.created_at))]),
-                          _vm._v(" "),
-                          _c(
-                            "td",
-                            [
-                              _c(
-                                "Tooltip",
-                                {
-                                  attrs: {
-                                    content: "Edit",
-                                    placement: "left-start"
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "Button",
-                                    {
-                                      attrs: { type: "info", size: "small" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.showEditModal(user, i)
+                  _c("Icon", { attrs: { type: "md-contacts" } }),
+                  _vm._v(" Administrator "),
+                  _c(
+                    "Button",
+                    {
+                      on: {
+                        click: function($event) {
+                          _vm.addModal = true
+                        }
+                      }
+                    },
+                    [
+                      _c("Icon", { attrs: { type: "md-add" } }),
+                      _vm._v(" User")
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "_overflow _table_div" }, [
+                _c(
+                  "table",
+                  { staticClass: "_table" },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm._l(_vm.users, function(user, i) {
+                      return _vm.users.length
+                        ? _c("tr", { key: i }, [
+                            _c("td", [_vm._v(_vm._s(user.id))]),
+                            _vm._v(" "),
+                            _c("td", { staticClass: "_table_name" }, [
+                              _vm._v(_vm._s(user.FullName))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", {}, [_vm._v(_vm._s(user.email))]),
+                            _vm._v(" "),
+                            _c("td", {}, [_vm._v(_vm._s(user.userType))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.created_at))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.updated_at))]),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              [
+                                _c(
+                                  "Tooltip",
+                                  {
+                                    attrs: {
+                                      content: "Edit",
+                                      placement: "left-start"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: { type: "info", size: "small" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showEditModal(user, i)
+                                          }
                                         }
-                                      }
-                                    },
-                                    [
-                                      _c("Icon", {
-                                        attrs: { type: "ios-create" }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "Tooltip",
-                                {
-                                  attrs: {
-                                    content: "Hapus",
-                                    placement: "right-start"
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "Button",
-                                    {
-                                      attrs: {
-                                        loading: user.isDeleting,
-                                        type: "error",
-                                        size: "small"
                                       },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.showDeletingModal(user, i)
+                                      [
+                                        _c("Icon", {
+                                          attrs: { type: "ios-create" }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "Tooltip",
+                                  {
+                                    attrs: {
+                                      content: "Hapus",
+                                      placement: "right-start"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "Button",
+                                      {
+                                        attrs: {
+                                          loading: user.isDeleting,
+                                          type: "error",
+                                          size: "small"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showDeletingModal(
+                                              user,
+                                              i
+                                            )
+                                          }
                                         }
-                                      }
-                                    },
-                                    [
-                                      _c("Icon", {
-                                        attrs: { type: "ios-trash-outline" }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ])
-                      : _vm._e()
+                                      },
+                                      [
+                                        _c("Icon", {
+                                          attrs: { type: "ios-trash-outline" }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        : _vm._e()
+                    })
+                  ],
+                  2
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "Modal",
+            {
+              attrs: {
+                title: "Tambah Admin",
+                "mask-closable": false,
+                closable: false
+              },
+              model: {
+                value: _vm.addModal,
+                callback: function($$v) {
+                  _vm.addModal = $$v
+                },
+                expression: "addModal"
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "space" },
+                [
+                  _c("Input", {
+                    attrs: { type: "text", placeholder: "Full name" },
+                    model: {
+                      value: _vm.data.FullName,
+                      callback: function($$v) {
+                        _vm.$set(_vm.data, "FullName", $$v)
+                      },
+                      expression: "data.FullName"
+                    }
                   })
                 ],
-                2
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "space" },
+                [
+                  _c("Input", {
+                    attrs: { type: "email", placeholder: "Email" },
+                    model: {
+                      value: _vm.data.email,
+                      callback: function($$v) {
+                        _vm.$set(_vm.data, "email", $$v)
+                      },
+                      expression: "data.email"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "space" },
+                [
+                  _c("Input", {
+                    attrs: { type: "text", placeholder: "sandi" },
+                    model: {
+                      value: _vm.data.sandi,
+                      callback: function($$v) {
+                        _vm.$set(_vm.data, "sandi", $$v)
+                      },
+                      expression: "data.sandi"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "space" },
+                [
+                  _c(
+                    "Select",
+                    {
+                      attrs: { placeholder: "Select admin type" },
+                      model: {
+                        value: _vm.data.userType,
+                        callback: function($$v) {
+                          _vm.$set(_vm.data, "userType", $$v)
+                        },
+                        expression: "data.userType"
+                      }
+                    },
+                    [
+                      _c("Option", { attrs: { value: "Admin" } }, [
+                        _vm._v("Admin")
+                      ]),
+                      _vm._v(" "),
+                      _c("Option", { attrs: { value: "Editor" } }, [
+                        _vm._v("Editor")
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { attrs: { slot: "footer" }, slot: "footer" },
+                [
+                  _c(
+                    "Button",
+                    {
+                      attrs: { type: "default" },
+                      on: {
+                        click: function($event) {
+                          _vm.addModal = false
+                        }
+                      }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "Button",
+                    {
+                      attrs: {
+                        type: "primary",
+                        disabled: _vm.isAdding,
+                        loading: _vm.isAdding
+                      },
+                      on: { click: _vm.addAdmin }
+                    },
+                    [_vm._v(_vm._s(_vm.isAdding ? "Adding.." : "Add admin"))]
+                  )
+                ],
+                1
               )
-            ])
-          ]
-        )
-      ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "Modal",
+            {
+              attrs: {
+                title: "Edit User",
+                "mask-closable": false,
+                closable: false
+              },
+              model: {
+                value: _vm.editModal,
+                callback: function($$v) {
+                  _vm.editModal = $$v
+                },
+                expression: "editModal"
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "space" },
+                [
+                  _c("Input", {
+                    attrs: { placeholder: "Ganti nama" },
+                    model: {
+                      value: _vm.editData.FullName,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editData, "FullName", $$v)
+                      },
+                      expression: "editData.FullName"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "space" },
+                [
+                  _c("Input", {
+                    attrs: { placeholder: "Ganti email" },
+                    model: {
+                      value: _vm.editData.email,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editData, "email", $$v)
+                      },
+                      expression: "editData.email"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "space" },
+                [
+                  _c("Input", {
+                    attrs: { type: "text", placeholder: "sandi" },
+                    model: {
+                      value: _vm.editData.sandi,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editData, "sandi", $$v)
+                      },
+                      expression: "editData.sandi"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "space" },
+                [
+                  _c(
+                    "Select",
+                    {
+                      attrs: { placeholder: "Select admin type" },
+                      model: {
+                        value: _vm.editData.userType,
+                        callback: function($$v) {
+                          _vm.$set(_vm.editData, "userType", $$v)
+                        },
+                        expression: "editData.userType"
+                      }
+                    },
+                    [
+                      _c("Option", { attrs: { value: "Admin" } }, [
+                        _vm._v("Admin")
+                      ]),
+                      _vm._v(" "),
+                      _c("Option", { attrs: { value: "Editor" } }, [
+                        _vm._v("Editor")
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { attrs: { slot: "footer" }, slot: "footer" },
+                [
+                  _c(
+                    "Button",
+                    {
+                      attrs: { type: "default" },
+                      on: {
+                        click: function($event) {
+                          _vm.editModal = false
+                        }
+                      }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "Button",
+                    {
+                      attrs: {
+                        type: "primary",
+                        disabled: _vm.isAdding,
+                        loading: _vm.isAdding
+                      },
+                      on: { click: _vm.editAdmin }
+                    },
+                    [_vm._v(_vm._s(_vm.isAdding ? "Editing.." : "Edit"))]
+                  )
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("deleteModal")
+        ],
+        1
+      )
     ])
   ])
 }
@@ -86094,6 +86684,8 @@ var staticRenderFns = [
       _c("th", [_vm._v("Tipe User")]),
       _vm._v(" "),
       _c("th", [_vm._v("diBuat")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("diubah")]),
       _vm._v(" "),
       _c("th", [_vm._v("Aksi")])
     ])
@@ -86961,7 +87553,7 @@ var render = function() {
                     [
                       _c(
                         "router-link",
-                        { attrs: { to: "admin" } },
+                        { attrs: { to: "adminusers" } },
                         [
                           _c("Icon", { attrs: { type: "ios-apps" } }),
                           _vm._v(" Users")
@@ -105014,7 +105606,7 @@ var routes = [//project route
   path: '/cat',
   component: _admin_pages_category_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
 }, {
-  path: '/admin',
+  path: '/adminusers',
   component: _admin_pages_adminusers_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, {
   path: '/use',

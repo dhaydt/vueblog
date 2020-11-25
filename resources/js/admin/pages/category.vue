@@ -168,6 +168,7 @@ import { mapGetters} from "vuex";
 					this.addModal = false
 					this.data.categoryName = ''
 					this.data.iconImage = ''
+					//this.$refs.upload.clearFiles()
 				} else {
 					if(res.status==442){
 						if(res.data.errors.categoryName){
@@ -240,9 +241,9 @@ import { mapGetters} from "vuex";
 				if(this.isEditingItem) {
                     console.log("inside")
 					return (this.editData.iconImage = res);
-                }
-                console.log(res)
-                this.data.iconImage = res;
+				}
+				this.data.iconImage = res;
+				
 
             },
             handleError (res, file) {

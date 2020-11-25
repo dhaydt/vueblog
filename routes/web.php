@@ -27,7 +27,11 @@ Route::post('app/get_category', [AdminController::class, 'getCategory']);
 Route::post('app/delete_category', [AdminController::class, 'deleteCategory']);
 Route::post('app/edit_category', [AdminController::class, 'editCategory']);
 
-Route::post('app/get_user', [AdminController::class, 'getUser']);
+Route::post('app/get_users', [AdminController::class, 'getUser']);
+Route::post('app/get_roles', [AdminController::class, 'getRoles']);
+Route::post('app/create_user', [AdminController::class, 'createUser']);
+Route::post('app/edit_user', [AdminController::class, 'editUser']);
+Route::post('app/delete_user', [AdminController::class, 'deleteUser']);
 
 
 

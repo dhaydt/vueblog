@@ -24,7 +24,7 @@
             <li><li><router-link to="/"><Icon type="ios-home" /> Dashboard</router-link></li>
             <li><router-link to="tags"><Icon type="ios-desktop" /> Tags</router-link></li>
             <li><router-link to="cat"><Icon type="ios-apps" /> Kategori</router-link></li>
-            <li><router-link to="admin"><Icon type="ios-apps" /> Users</router-link></li>
+            <li><router-link to="adminusers"><Icon type="ios-apps" /> Users</router-link></li>
 
             <!-- <li><router-link to="tags"><Icon type="ios-speedometer" /> Tags</router-link></li>
             <li><router-link to="category"><Icon type="ios-speedometer" /> Category</router-link></li>
