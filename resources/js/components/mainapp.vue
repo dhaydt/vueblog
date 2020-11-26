@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div>
+    <div  v-if="isLoggedIn">
     <!--========== ADMIN SIDE MENU one ========-->
     <div class="_1side_menu" >
     <div class="_1side_menu_logo">
@@ -58,3 +58,17 @@
         <router-view></router-view>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            isLoggedIn : true,
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>

@@ -32,6 +32,11 @@ Route::post('app/get_roles', [AdminController::class, 'getRoles']);
 Route::post('app/create_user', [AdminController::class, 'createUser']);
 Route::post('app/edit_user', [AdminController::class, 'editUser']);
 Route::post('app/delete_user', [AdminController::class, 'deleteUser']);
+Route::post('app/admin_login', [AdminController::class, 'adminLogin']);
+
+Route::get('/', [AdminController::class, 'index']);
+Route::get('/logout', [AdminController::class, 'logout']);
+Route::any('{slug}', [AdminController::class, 'index']);
 
 
 
@@ -40,24 +45,24 @@ Route::post('app/delete_user', [AdminController::class, 'deleteUser']);
 
 
 
-Route::get('/test', function () {
-	return view('welcome');
-});
+// Route::get('/test', function () {
+// 	return view('welcome');
+// });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/env', [TestController::class, 'method']);
+// Route::get('/env', [TestController::class, 'method']);
 
-Route::any('/{slug}', function(){
-    return view('welcome');
-});
+// Route::any('/{slug}', function(){
+//     return view('welcome');
+// });
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

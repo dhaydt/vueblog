@@ -1,16 +1,18 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import FP from './components/pages/first.vue'
-import rot from './components/pages/rot.vue'
-import hook from './components/pages/basic/hooks.vue'
+import FP from './components/pages/first'
+import rot from './components/pages/rot'
+import hook from './components/pages/basic/hooks'
+import usecom from './vuex/usecom'
 
 //adminproject pages
-import home from './components/pages/home.vue'
-import tags from './admin/pages/tags.vue'
-import category from './admin/pages/category.vue'
-import adminusers from './admin/pages/adminusers.vue'
-import usecom from './vuex/usecom.vue'
+import home from './components/pages/home'
+import tags from './admin/pages/tags'
+import category from './admin/pages/category'
+import adminusers from './admin/pages/adminusers'
+import login from './admin/pages/login'
+
 
 Vue.use(Router);
 
@@ -33,9 +35,10 @@ const routes = [
         component: adminusers
     },
     {
-        path: '/use',
-        component: usecom
+        path: '/login',
+        component: login
     },
+    
 
 
 
@@ -65,7 +68,13 @@ const routes = [
     {
         path: '/hooks',
         component: hook
-    }
+    },
+
+    //vuex
+    {
+        path: '/use',
+        component: usecom
+    },
 ]
 
 export default new Router({

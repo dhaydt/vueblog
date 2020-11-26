@@ -61,7 +61,7 @@
                         <Input type="email" v-model="data.email" placeholder="Email"  />
                     </div>
                     <div class="space">
-                        <Input type="text" v-model="data.sandi" placeholder="sandi"  />
+                        <Input type="text" v-model="data.password" placeholder="password"  />
                     </div>
                     <div class="space">
                         <Select v-model="data.userType"  placeholder="Select admin type">
@@ -93,7 +93,7 @@
                     </div>
 
                     <div class="space">
-                        <Input type="text" v-model="editData.sandi" placeholder="sandi"  />
+                        <Input type="text" v-model="editData.password" placeholder="password"  />
                     </div>
 
                     <div class="space">
@@ -124,7 +124,7 @@ import deleteModal from "../components/deleteModal";
                 data : {
                     FullName: '',
                     email: '',
-                    sandi: '',
+                    password: '',
                     userType: '',
                     //role_id: null
                 },
@@ -135,7 +135,7 @@ import deleteModal from "../components/deleteModal";
                 editData : {
                     FullName: '',
                     email: '',
-                    sandi: '',
+                    password: '',
                     userType: ''
                 },
                 index : -1,
@@ -152,7 +152,7 @@ import deleteModal from "../components/deleteModal";
             async addAdmin(){
             if(this.data.FullName.trim()=='') return this.e(' name is required')
             if(this.data.email.trim()=='') return this.e('Email is required')
-			if(this.data.sandi.trim()=='') return this.e('sandi is required')
+			if(this.data.password.trim()=='') return this.e('password is required')
             if(this.data.userType.trim()=='') return this.e(' type  is required')
             
 			const res = await this.callApi('post', 'app/create_user', this.data)
@@ -162,7 +162,7 @@ import deleteModal from "../components/deleteModal";
 				this.addModal = false
 				this.data.FullName = ''
 				this.data.email = ''
-				this.data.sandi = ''
+				this.data.password = ''
 				this.data.userType = ''
 			}else{
 				if(res.status==422){
@@ -180,7 +180,7 @@ import deleteModal from "../components/deleteModal";
 			async editAdmin() {
 				if(this.editData.FullName.trim()=='') return this.e('Nama diisi dulu!')
 				if(this.editData.email.trim()=='') return this.e('Email belum di isi')
-				if(this.editData.sandi=='') return this.e('sandi belum di isi')
+				if(this.editData.password=='') return this.e('password belum di isi')
 				if(this.editData.userType.trim()=='') return this.e('Tipe user belum di isi')
 				const res = await this.callApi('post', 'app/edit_user', this.editData)
 				if(res.status===200){
@@ -204,7 +204,7 @@ import deleteModal from "../components/deleteModal";
 					id: user.id,
                     FullName: user.FullName,
                     email: user.email,
-                    sandi: user.sandi,
+                    password: user.password,
                     userType: user.userType
 				}
 				this.editData = obj
