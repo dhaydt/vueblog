@@ -22,6 +22,7 @@ class AdminController extends Controller
 
             return view('welcome');
         }
+
         //if you login, check if u admin..
         $user = Auth::user();
         if($user->userType == 'User'){ //bila kamu user biasa, anda akan disuruh login lagi
@@ -46,7 +47,7 @@ class AdminController extends Controller
         ]);
 
         if(Auth::attempt([
-            'email' => $request->email, 
+            'email' => $request->email,
             'password' => $request->password,
             ])){
                 $user = Auth::user();
@@ -174,7 +175,7 @@ class AdminController extends Controller
     {
     return User::orderBy('id', 'desc')->get();
     }
-    
+
     public function getRoles()
     {
         return Role::all();
@@ -207,7 +208,7 @@ class AdminController extends Controller
                 'userType' => $request->userType,
             ]);
             return $user;
-    
+
         }
     }
 

@@ -5,14 +5,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state : {
-        //counter: 1000,
         deleteModalObj : {
             showDeleteModal : false,
             deleteUrl : '',
             data : null,
             deletingIndex	: -1,
             isDeleted : false,
-        }
+        },
+        user: false,
     },
 
     getters : {
@@ -26,9 +26,6 @@ export default new Vuex.Store({
     },
 
     mutations : {
-        // changeTheCounter(state, data) {
-        //     state.counter += data
-        // },
         setDeleteModal(state, data){
             const deleteModalObj = {
                 showDeleteModal : false,
@@ -41,6 +38,9 @@ export default new Vuex.Store({
         },
         setDeletingModalObj(state, data) {
             state.deleteModalObj = data
+        },
+        updateUser(state, data) {
+            state.user = data
         },
 
     },

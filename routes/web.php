@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\AdminController;
+use App\Http\Middleware\AdminCheck;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,24 +16,27 @@ use App\Http\Controllers\AdminController;
 |
 */
 //menambah data tag
-Route::post('app/create_tag', [AdminController::class, 'addTag']);
-Route::post('app/get_tags', [AdminController::class, 'getTag']);
-Route::post('app/edit_tag', [AdminController::class, 'editTag']);
-Route::post('app/delete_tag', [AdminController::class, 'deleteTag']);
-Route::post('app/upload', [AdminController::class, 'upload']);
-Route::post('app/delete_image', [AdminController::class, 'deleteImage']);
+Route::prefix('app')->middleware([AdminCheck::class])->group(function(){
+    Route::post('/create_tag', [AdminController::class, 'addTag']);
+    Route::get('/get_tags', [AdminController::class, 'getTag']);
+    Route::post('/edit_tag', [AdminController::class, 'editTag']);
+    Route::post('/delete_tag', [AdminController::class, 'deleteTag']);
+    Route::post('/upload', [AdminController::class, 'upload']);
+    Route::post('/delete_image', [AdminController::class, 'deleteImage']);
 
-Route::post('app/create_category', [AdminController::class, 'addCategory']);
-Route::post('app/get_category', [AdminController::class, 'getCategory']);
-Route::post('app/delete_category', [AdminController::class, 'deleteCategory']);
-Route::post('app/edit_category', [AdminController::class, 'editCategory']);
+    Route::post('/create_category', [AdminController::class, 'addCategory']);
+    Route::get('/get_category', [AdminController::class, 'getCategory']);
+    Route::post('/delete_category', [AdminController::class, 'deleteCategory']);
+    Route::post('/edit_category', [AdminController::class, 'editCategory']);
 
-Route::post('app/get_users', [AdminController::class, 'getUser']);
-Route::post('app/get_roles', [AdminController::class, 'getRoles']);
-Route::post('app/create_user', [AdminController::class, 'createUser']);
-Route::post('app/edit_user', [AdminController::class, 'editUser']);
-Route::post('app/delete_user', [AdminController::class, 'deleteUser']);
-Route::post('app/admin_login', [AdminController::class, 'adminLogin']);
+    Route::get('/get_users', [AdminController::class, 'getUser']);
+    Route::get('/get_roles', [AdminController::class, 'getRoles']);
+    Route::post('/create_user', [AdminController::class, 'createUser']);
+    Route::post('/edit_user', [AdminController::class, 'editUser']);
+    Route::post('/delete_user', [AdminController::class, 'deleteUser']);
+    Route::post('/admin_login', [AdminController::class, 'adminLogin']);
+});
+
 
 Route::get('/', [AdminController::class, 'index']);
 Route::get('/logout', [AdminController::class, 'logout']);

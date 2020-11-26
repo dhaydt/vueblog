@@ -2971,8 +2971,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 res = _context.sent;
 
                 if (res.status === 200) {
-                  _this.s(res.data.msg); //window.location = ('/')
+                  _this.s(res.data.msg);
 
+                  window.location = '/';
                 } else {
                   if (res.status === 401) {
                     _this.i(res.data.msg);
@@ -3405,10 +3406,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
   data: function data() {
     return {
-      isLoggedIn: true
+      isLoggedIn: false
     };
+  },
+  created: function created() {
+    this.$store.commit('updateUser', this.user);
   }
 });
 
@@ -87803,7 +87808,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.isLoggedIn
+      _vm.$store.state.user
         ? _c("div", [
             _c("div", { staticClass: "_1side_menu" }, [
               _c("div", { staticClass: "_1side_menu_logo" }, [
@@ -87912,7 +87917,19 @@ var render = function() {
                           )
                         ],
                         1
-                      )
+                      ),
+                      _vm._v(" "),
+                      _c("li", [
+                        _c(
+                          "a",
+                          { attrs: { href: "/logout" } },
+                          [
+                            _c("Icon", { attrs: { type: "ios-speedometer" } }),
+                            _vm._v(" Logout")
+                          ],
+                          1
+                        )
+                      ])
                     ],
                     2
                   )
@@ -106107,14 +106124,14 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    //counter: 1000,
     deleteModalObj: {
       showDeleteModal: false,
       deleteUrl: '',
       data: null,
       deletingIndex: -1,
       isDeleted: false
-    }
+    },
+    user: false
   },
   getters: {
     getCounter: function getCounter(state) {
@@ -106125,9 +106142,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     }
   },
   mutations: {
-    // changeTheCounter(state, data) {
-    //     state.counter += data
-    // },
     setDeleteModal: function setDeleteModal(state, data) {
       var deleteModalObj = {
         showDeleteModal: false,
@@ -106140,6 +106154,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     setDeletingModalObj: function setDeletingModalObj(state, data) {
       state.deleteModalObj = data;
+    },
+    updateUser: function updateUser(state, data) {
+      state.user = data;
     }
   },
   actions: {// changeCounterAction({commit}, data){

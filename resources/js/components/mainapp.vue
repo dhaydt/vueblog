@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div  v-if="isLoggedIn">
+    <div  v-if="$store.state.user">
     <!--========== ADMIN SIDE MENU one ========-->
     <div class="_1side_menu" >
     <div class="_1side_menu_logo">
@@ -33,7 +33,7 @@
             <li><router-link to="assignRole"><Icon type="ios-speedometer" /> Assign role</router-link></li> -->
 
 
-            <!-- <li><a href="/logout"><Icon type="ios-speedometer" /> Logout</a></li> -->
+            <li><a href="/logout"><Icon type="ios-speedometer" /> Logout</a></li>
         </ul>
         </div>
     </div>
@@ -61,10 +61,15 @@
 
 <script>
 export default {
+    props: ['user'],
+
     data() {
         return {
-            isLoggedIn : true,
+            isLoggedIn : false,
         }
+    },
+    created(){
+        this.$store.commit('updateUser', this.user)
     }
 }
 </script>
