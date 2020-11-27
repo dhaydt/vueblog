@@ -5,7 +5,7 @@
 
 				<!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
-					<p class="_title0"><Icon type="md-pricetags" /> Roles Management
+					<p class="_title0"><Icon type="md-unlock" /> Roles Management
 						<Button @click="addModal = true" type="default" size="small"><Icon type="md-add" /> Role</Button> </p>
 
 					<div class="_overflow _table_div">
@@ -30,7 +30,7 @@
 										<Button @click="showEditModal(role, i)" type="info" size="small"><Icon type="ios-create" /></Button>
 									</Tooltip>
 									<Tooltip content="Hapus" placement="right-start">
-                                        <Button type="error" size="small" @click="showDeletingModal(role, i)"  :loading="role.isDeleting"><Icon type="ios-trash" /></Button>
+                                        <Button type="text" size="small" @click="showDeletingModal(role, i)"  :loading="role.isDeleting" ghost><Icon ghost type="ios-trash" /></Button>
                                     </Tooltip>
 								</td>
 							</tr>
@@ -43,8 +43,14 @@
 								title="Tambah Role Baru"
 								:mask-closable=false
 								>
-								<Input v-model="data.roleName" placeholder="Tipe Role" style="width: 300px" />
-
+								<Input v-model="data.roleName" placeholder="Tipe Role" style="width: 300px" @keyup.enter.native="addRole()" />
+                                <div class="space">
+                                    <Select v-model="data.isAdmin"  placeholder="Tipe Admin">
+                                        <Option value="1">Admin</Option>
+                                        <Option value="0">User</Option>
+                                        <!-- <Option value="Editor" >Editor</Option> -->
+                                    </Select>
+                                </div>
 								<div slot="footer">
 									<Button @click="addModal = false" type="default">Close</Button>
 									<Button @click="addRole" type="primary" :disabled='isAdding' :loading="isAdding">{{isAdding ? 'Adding..': 'Tambah'}}</Button>
@@ -58,7 +64,7 @@
 								:mask-closable="false"
 								:closable="false"
 								>
-								<Input v-model="editData.roleName" clearable placeholder="Edit tipe Role" style="width: 300px" />
+								<Input v-model="editData.roleName" clearable placeholder="Edit tipe Role" style="width: 300px" @keyup.enter.native="editRole()" />
 
 								<div slot="footer">
 									<Button @click="editModal = false" type="default">Close</Button>
@@ -93,14 +99,16 @@ import {mapGetters} from 'vuex'
 		data() {
 			return{
 				data 			: {
-									roleName: ''
+                                    roleName: '',
+                                    isAdmin: ''
 								},
 				addModal 		: false,
 				editModal 		: false,
 				isAdding 		: false,
 				roles 			: [],
 				editData 		: {
-									roleName: ''
+                                    roleName: '',
+                                    isAdmin: ''
 								},
 				index 			: -1,
 				showDeleteModal	: false,
@@ -117,16 +125,18 @@ import {mapGetters} from 'vuex'
 			//menambah data tag
 			async addRole() {
 				if(this.data.roleName.trim()=='') return this.e('Tipe Role belum di isi')
+				if(this.data.isAdmin.trim()=='') return this.e('Tipe Admin belum di isi')
 				const res = await this.callApi('post', 'app/create_role', this.data)
 				if(res.status===201){
 					this.roles.unshift(res.data)
 					this.s('Role berhasil ditambah')
 					this.addModal = false
-					this.data.roleName = ''
+                    this.data.roleName = ''
+                    this.data.isAdmin = ''
 				} else {
 					if(res.status==442){
-						if(res.data.errors.roleName){
-							this.e(res.data.errors.roleName[0])
+						for(let i in res.data.errors){
+                            this.e(res.data.errors[i][0])
 						}
 					} else {
 						this.swr()

@@ -2175,8 +2175,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         FullName: '',
         email: '',
         password: '',
-        userType: '' //role_id: null
-
+        role_id: null
       },
       addModal: false,
       editModal: false,
@@ -2186,7 +2185,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         FullName: '',
         email: '',
         password: '',
-        userType: ''
+        role_id: null
       },
       index: -1,
       showDeleteModal: false,
@@ -2231,7 +2230,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", _this.e('password is required'));
 
               case 6:
-                if (!(_this.data.userType.trim() == '')) {
+                if (_this.data.role_id) {
                   _context.next = 8;
                   break;
                 }
@@ -2254,7 +2253,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.data.FullName = '';
                   _this.data.email = '';
                   _this.data.password = '';
-                  _this.data.userType = '';
+                  _this.data.role_id = null;
                 } else {
                   if (res.status == 422) {
                     for (i in res.data.errors) {
@@ -2307,7 +2306,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return", _this2.e('password belum di isi'));
 
               case 6:
-                if (!(_this2.editData.userType.trim() == '')) {
+                if (_this2.editData.role_id) {
                   _context2.next = 8;
                   break;
                 }
@@ -2351,7 +2350,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         FullName: user.FullName,
         email: user.email,
         password: user.password,
-        userType: user.userType
+        role_id: user.role_id
       };
       this.editData = obj;
       this.editModal = true;
@@ -2934,7 +2933,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var res;
+        var res, i;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2971,12 +2970,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 res = _context.sent;
 
                 if (res.status === 200) {
-                  _this.s(res.data.msg);
+                  _this.s(res.data.msg); //window.location = ('/')
 
-                  window.location = '/';
                 } else {
                   if (res.status === 401) {
                     _this.i(res.data.msg);
+                  } else if (res.status == 422) {
+                    for (i in res.data.errors) {
+                      _this.e(res.data.errors[i][0]);
+                    }
                   } else {
                     _this.swr();
                   }
@@ -3110,20 +3112,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       data: {
-        roleName: ''
+        roleName: '',
+        isAdmin: ''
       },
       addModal: false,
       editModal: false,
       isAdding: false,
       roles: [],
       editData: {
-        roleName: ''
+        roleName: '',
+        isAdmin: ''
       },
       index: -1,
       showDeleteModal: false,
@@ -3139,7 +3149,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var res;
+        var res, i;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -3152,10 +3162,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", _this.e('Tipe Role belum di isi'));
 
               case 2:
-                _context.next = 4;
-                return _this.callApi('post', 'app/create_role', _this.data);
+                if (!(_this.data.isAdmin.trim() == '')) {
+                  _context.next = 4;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.e('Tipe Admin belum di isi'));
 
               case 4:
+                _context.next = 6;
+                return _this.callApi('post', 'app/create_role', _this.data);
+
+              case 6:
                 res = _context.sent;
 
                 if (res.status === 201) {
@@ -3165,17 +3183,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this.addModal = false;
                   _this.data.roleName = '';
+                  _this.data.isAdmin = '';
                 } else {
                   if (res.status == 442) {
-                    if (res.data.errors.roleName) {
-                      _this.e(res.data.errors.roleName[0]);
+                    for (i in res.data.errors) {
+                      _this.e(res.data.errors[i][0]);
                     }
                   } else {
                     _this.swr();
                   }
                 }
 
-              case 6:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -86884,7 +86903,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", {}, [_vm._v(_vm._s(user.email))]),
                             _vm._v(" "),
-                            _c("td", {}, [_vm._v(_vm._s(user.userType))]),
+                            _c("td", {}, [_vm._v(_vm._s(user.role_id))]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(user.created_at))]),
                             _vm._v(" "),
@@ -87052,22 +87071,20 @@ var render = function() {
                     {
                       attrs: { placeholder: "Select admin type" },
                       model: {
-                        value: _vm.data.userType,
+                        value: _vm.data.role_id,
                         callback: function($$v) {
-                          _vm.$set(_vm.data, "userType", $$v)
+                          _vm.$set(_vm.data, "role_id", $$v)
                         },
-                        expression: "data.userType"
+                        expression: "data.role_id"
                       }
                     },
-                    [
-                      _c("Option", { attrs: { value: "Admin" } }, [
-                        _vm._v("Admin")
-                      ]),
-                      _vm._v(" "),
-                      _c("Option", { attrs: { value: "Editor" } }, [
-                        _vm._v("Editor")
-                      ])
-                    ],
+                    _vm._l(_vm.roles, function(r, i) {
+                      return _vm.roles.length
+                        ? _c("Option", { key: i, attrs: { value: r.id } }, [
+                            _vm._v(_vm._s(r.roleName))
+                          ])
+                        : _vm._e()
+                    }),
                     1
                   )
                 ],
@@ -87189,11 +87206,11 @@ var render = function() {
                     {
                       attrs: { placeholder: "Select admin type" },
                       model: {
-                        value: _vm.editData.userType,
+                        value: _vm.editData.role_id,
                         callback: function($$v) {
-                          _vm.$set(_vm.editData, "userType", $$v)
+                          _vm.$set(_vm.editData, "role_id", $$v)
                         },
-                        expression: "editData.userType"
+                        expression: "editData.role_id"
                       }
                     },
                     [
@@ -87873,7 +87890,7 @@ var render = function() {
                 "p",
                 { staticClass: "_title0" },
                 [
-                  _c("Icon", { attrs: { type: "md-pricetags" } }),
+                  _c("Icon", { attrs: { type: "md-unlock" } }),
                   _vm._v(" Roles Management\n\t\t\t\t\t\t"),
                   _c(
                     "Button",
@@ -87959,9 +87976,10 @@ var render = function() {
                                       "Button",
                                       {
                                         attrs: {
-                                          type: "error",
+                                          type: "text",
                                           size: "small",
-                                          loading: role.isDeleting
+                                          loading: role.isDeleting,
+                                          ghost: ""
                                         },
                                         on: {
                                           click: function($event) {
@@ -87974,7 +87992,10 @@ var render = function() {
                                       },
                                       [
                                         _c("Icon", {
-                                          attrs: { type: "ios-trash" }
+                                          attrs: {
+                                            ghost: "",
+                                            type: "ios-trash"
+                                          }
                                         })
                                       ],
                                       1
@@ -88011,6 +88032,17 @@ var render = function() {
               _c("Input", {
                 staticStyle: { width: "300px" },
                 attrs: { placeholder: "Tipe Role" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.addRole()
+                  }
+                },
                 model: {
                   value: _vm.data.roleName,
                   callback: function($$v) {
@@ -88019,6 +88051,35 @@ var render = function() {
                   expression: "data.roleName"
                 }
               }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "space" },
+                [
+                  _c(
+                    "Select",
+                    {
+                      attrs: { placeholder: "Tipe Admin" },
+                      model: {
+                        value: _vm.data.isAdmin,
+                        callback: function($$v) {
+                          _vm.$set(_vm.data, "isAdmin", $$v)
+                        },
+                        expression: "data.isAdmin"
+                      }
+                    },
+                    [
+                      _c("Option", { attrs: { value: "1" } }, [
+                        _vm._v("Admin")
+                      ]),
+                      _vm._v(" "),
+                      _c("Option", { attrs: { value: "0" } }, [_vm._v("User")])
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -88076,6 +88137,17 @@ var render = function() {
               _c("Input", {
                 staticStyle: { width: "300px" },
                 attrs: { clearable: "", placeholder: "Edit tipe Role" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.editRole()
+                  }
+                },
                 model: {
                   value: _vm.editData.roleName,
                   callback: function($$v) {
@@ -88589,9 +88661,7 @@ var render = function() {
                             "router-link",
                             { attrs: { to: "role" } },
                             [
-                              _c("Icon", {
-                                attrs: { type: "ios-speedometer" }
-                              }),
+                              _c("Icon", { attrs: { type: "md-lock" } }),
                               _vm._v(" Role Management")
                             ],
                             1

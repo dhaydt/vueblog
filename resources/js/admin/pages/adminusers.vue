@@ -27,7 +27,7 @@
 								<td>{{user.id}}</td>
 								<td class="_table_name">{{user.FullName}}</td>
 								<td class="">{{user.email}}</td>
-								<td class="">{{user.userType}}</td>
+								<td class="">{{user.role_id}}</td>
 								<td>{{user.created_at}}</td>
 								<td>{{user.updated_at}}</td>
 								<td>
@@ -64,9 +64,9 @@
                         <Input type="text" v-model="data.password" placeholder="password"  />
                     </div>
                     <div class="space">
-                        <Select v-model="data.userType"  placeholder="Select admin type">
-                            <Option value="Admin">Admin</Option>
-                            <Option value="Editor">Editor</Option>
+                        <Select v-model="data.role_id"  placeholder="Select admin type">
+                            <Option :value="r.id" v-for="(r, i) in roles" :key="i" v-if="roles.length">{{r.roleName}}</Option>
+
                             <!-- <Option value="Editor" >Editor</Option> -->
                         </Select>
                     </div>
@@ -97,7 +97,7 @@
                     </div>
 
                     <div class="space">
-                        <Select v-model="editData.userType"  placeholder="Select admin type">
+                        <Select v-model="editData.role_id"  placeholder="Select admin type">
                             <Option value="Admin">Admin</Option>
                             <Option value="Editor">Editor</Option>
                             <!-- <Option value="Editor" >Editor</Option> -->
@@ -125,8 +125,7 @@ import deleteModal from "../components/deleteModal";
                     FullName: '',
                     email: '',
                     password: '',
-                    userType: '',
-                    //role_id: null
+                    role_id: null
                 },
                 addModal: false,
                 editModal: false,
@@ -136,7 +135,7 @@ import deleteModal from "../components/deleteModal";
                     FullName: '',
                     email: '',
                     password: '',
-                    userType: ''
+                    role_id: null
                 },
                 index : -1,
                 showDeleteModal: false,
@@ -153,8 +152,8 @@ import deleteModal from "../components/deleteModal";
             if(this.data.FullName.trim()=='') return this.e(' name is required')
             if(this.data.email.trim()=='') return this.e('Email is required')
 			if(this.data.password.trim()=='') return this.e('password is required')
-            if(this.data.userType.trim()=='') return this.e(' type  is required')
-            
+            if(!this.data.role_id) return this.e(' type  is required')
+
 			const res = await this.callApi('post', 'app/create_user', this.data)
 			if(res.status===201){
 				this.users.unshift(res.data)
@@ -163,7 +162,7 @@ import deleteModal from "../components/deleteModal";
 				this.data.FullName = ''
 				this.data.email = ''
 				this.data.password = ''
-				this.data.userType = ''
+				this.data.role_id = null
 			}else{
 				if(res.status==422){
                     for(let i in res.data.errors){
@@ -172,7 +171,7 @@ import deleteModal from "../components/deleteModal";
 				}else{
 					this.swr()
 				}
-				
+
 			}
         },
 
@@ -181,7 +180,7 @@ import deleteModal from "../components/deleteModal";
 				if(this.editData.FullName.trim()=='') return this.e('Nama diisi dulu!')
 				if(this.editData.email.trim()=='') return this.e('Email belum di isi')
 				if(this.editData.password=='') return this.e('password belum di isi')
-				if(this.editData.userType.trim()=='') return this.e('Tipe user belum di isi')
+				if(!this.editData.role_id) return this.e('Tipe user belum di isi')
 				const res = await this.callApi('post', 'app/edit_user', this.editData)
 				if(res.status===200){
 					this.users[this.index] = this.editData
@@ -198,14 +197,14 @@ import deleteModal from "../components/deleteModal";
 					}
 				}
             },
-            
+
             showEditModal(user, index){
 				let obj = {
 					id: user.id,
                     FullName: user.FullName,
                     email: user.email,
                     password: user.password,
-                    userType: user.userType
+                    role_id: user.role_id
 				}
 				this.editData = obj
 				this.editModal = true

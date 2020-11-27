@@ -26,14 +26,14 @@ class AdminCheck
             return response()->json([
                 'msg' => 'Kamu tidak diizinkan mengakses..',
                 'url' => $request->path()
-            ], 403);
+            ], 422);
         }
 
         $user = Auth::user();
-        if($user->userType == 'User'){
+        if($user->role->isAdmin == 0){
             return response()->json([
                 'msg' => 'tidak dapat izin'
-            ], 403);
+            ], 422);
         }
 
         return $next($request);

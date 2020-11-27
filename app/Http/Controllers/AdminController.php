@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use \Illuminate\Support\Facades\Log;
 //use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -25,7 +26,7 @@ class AdminController extends Controller
 
         //if you login, check if u admin..
         $user = Auth::user();
-        if($user->userType == 'User'){ //bila kamu user biasa, anda akan disuruh login lagi
+        if($user->role->isAdmin == 0){ //bila kamu user biasa, anda akan disuruh login lagi
             return redirect('/login');
         }
         if($request->path() == 'login'){ //bila kamu admin atau editor, anda akan masuk ke homepage
@@ -51,11 +52,11 @@ class AdminController extends Controller
             'password' => $request->password,
             ])){
                 $user = Auth::user();
-                if($user->userType == 'User'){
+                if($user->role->isAdmin == 0){
                     Auth::logout();
                     return response()->json([
                         'msg' => 'Gagal masuk controller'
-                    ], 402);
+                    ], 401);
                 }
                 return response()->json([
                     'msg' => 'berhasil login',
@@ -64,7 +65,7 @@ class AdminController extends Controller
             } else {
                 return response()->json([
                     'msg' => 'Password/Email salah controller'
-                ], 403);
+                ], 422);
             };
     }
 
@@ -173,7 +174,7 @@ class AdminController extends Controller
 
     public function getUser()
     {
-    return User::orderBy('id', 'desc')->get();
+    return User::where('role_id', '!=', 'User')->get();
     }
 
     public function createUser(Request $request){
@@ -182,14 +183,14 @@ class AdminController extends Controller
             'FullName'  => 'required',
             'email'     => 'bail|required|email',
             'password'     => 'bail|required|min:2',
-            'userType'     => 'required',
+            'role_id'     => 'required',
             ]);
             $password = bcrypt($request->password);
             $user = User::create([
                 'FullName' => $request->FullName,
                 'email' => $request->email,
                 'password' => $password,
-                'userType' => $request->userType,
+                'role_id' => $request->role_id,
             ]);
             return $user;
 
@@ -203,14 +204,14 @@ class AdminController extends Controller
         'id' => 'required',
         'email'     => 'bail|required|email',
         'password'     => 'min:2',
-        'userType' => 'required',
+        'role_id' => 'required',
     ]);
     $password = bcrypt($request->password);
     return User::where('id', $request->id)->update([
         'FullName' => $request->FullName,
         'email' => $request->email,
         'password' => $password,
-        'userType' => $request->userType,
+        'role_id' => $request->role_id,
     ]);
     }
 
@@ -232,9 +233,11 @@ class AdminController extends Controller
         // validate request
         $this->validate($request, [
             'roleName' => 'required',
+            'isAdmin' => 'required'
         ]);
         return Role::create([
             'roleName' => $request->roleName,
+            'isAdmin' => $request->isAdmin,
         ]);
     }
 
