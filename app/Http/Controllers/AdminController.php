@@ -176,22 +176,6 @@ class AdminController extends Controller
     return User::orderBy('id', 'desc')->get();
     }
 
-    public function getRoles()
-    {
-        return Role::all();
-    }
-
-    // public function assignRole(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'permission' => 'required',
-    //         'id' => 'required',
-    //     ]);
-    //     return Role::where('id', $request->id)->update([
-    //         'permission' => $request->permission,
-    //     ]);
-    // }
-
     public function createUser(Request $request){
         {
             $this->validate($request, [
@@ -237,4 +221,50 @@ class AdminController extends Controller
         ]);
         return User::where('id', $request->id)->delete();
     }
+
+    public function getRoles()
+    {
+        return Role::all();
+    }
+
+    public function addRole(Request $request)
+    {
+        // validate request
+        $this->validate($request, [
+            'roleName' => 'required',
+        ]);
+        return Role::create([
+            'roleName' => $request->roleName,
+        ]);
+    }
+
+    public function editRole(Request $request)
+    {
+        // validate request
+        $this->validate($request, [
+            'roleName' => 'required',
+        ]);
+        return Role::where('id', $request->id)->update([
+            'roleName' => $request->roleName,
+        ]);
+    }
+
+    public function deleteRole(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required',
+        ]);
+        return Role::where('id', $request->id)->delete();
+    }
+
+    // public function assignRole(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'permission' => 'required',
+    //         'id' => 'required',
+    //     ]);
+    //     return Role::where('id', $request->id)->update([
+    //         'permission' => $request->permission,
+    //     ]);
+    // }
 }

@@ -6,10 +6,10 @@
                     <h1>Login to Dashboard</h1>
                 </div>
                 <div class="space">
-                    <Input type="email" v-model="data.email" placeholder="Email"  />
+                    <Input type="email" v-model="data.email" placeholder="Email" @keyup.enter.native="login()" />
                 </div>
                 <div class="space">
-                    <Input type="text" v-model="data.password" placeholder="password"  />
+                    <Input type="text" v-model="data.password" placeholder="password" @keyup.enter.native="login()" />
                 </div>
                 <div class="login_footer">
                     <Button type="primary" @click="login" :disabled="isLogging"
