@@ -26,7 +26,7 @@
             <li><router-link to="cat"><Icon type="ios-apps" /> Kategori</router-link></li>
             <li><router-link to="adminusers"><Icon type="ios-people" /> Users</router-link></li>
             <li><router-link to="role"><Icon type="md-lock" /> Role Management</router-link></li>
-            <li><router-link to="assignRole"><Icon type="ios-speedometer" /> Assign role</router-link></li>
+            <li><router-link to="assignrole"><Icon type="md-contacts" /> Assign Roles</router-link></li>
 
 
             <li><a href="/logout"><Icon type="md-log-out" /> Logout</a></li>

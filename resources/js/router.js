@@ -13,6 +13,7 @@ import category from './admin/pages/category'
 import adminusers from './admin/pages/adminusers'
 import login from './admin/pages/login'
 import role from './admin/pages/role'
+import assignrole from './admin/pages/assignrole'
 
 
 Vue.use(Router);
@@ -21,27 +22,38 @@ const routes = [
     //project route
     {
         path: '/',
-        component: home
+        component: home,
+        name: 'Home'
     },
     {
         path: '/tags',
-        component: tags
+        component: tags,
+        name: 'Tags'
     },
     {
         path: '/cat',
-        component: category
+        component: category,
+        name: 'Category'
     },
     {
         path: '/adminusers',
-        component: adminusers
+        component: adminusers,
+        name: 'Adminusers'
     },
     {
         path: '/login',
-        component: login
+        component: login,
+        name: 'Login'
     },
     {
         path: '/role',
-        component: role
+        component: role,
+        name: 'Role'
+    },
+    {
+        path: '/assignrole',
+        component: assignrole,
+        name: 'Assignrole'
     },
 
 

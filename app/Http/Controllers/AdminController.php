@@ -65,7 +65,7 @@ class AdminController extends Controller
             } else {
                 return response()->json([
                     'msg' => 'Password/Email salah controller'
-                ], 422);
+                ], 402);
             };
     }
 
@@ -260,14 +260,14 @@ class AdminController extends Controller
         return Role::where('id', $request->id)->delete();
     }
 
-    // public function assignRole(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'permission' => 'required',
-    //         'id' => 'required',
-    //     ]);
-    //     return Role::where('id', $request->id)->update([
-    //         'permission' => $request->permission,
-    //     ]);
-    // }
+    public function assignRole(Request $request)
+    {
+        $this->validate($request, [
+            'permission' => 'required',
+            'id'    => 'required'
+        ]);
+        return Role::where('id', $request->id)->update([
+            'permission' => $request->permission,
+        ]);
+    }
 }

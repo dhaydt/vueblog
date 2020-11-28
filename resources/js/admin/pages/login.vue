@@ -43,16 +43,16 @@
                 const res = await this.callApi('post', 'app/admin_login', this.data)
                 if(res.status===200){
                     this.s(res.data.msg)
-                    //window.location = ('/')
+                    window.location = ('/')
                 } else {
                     if(res.status===401){
                         this.i(res.data.msg)
-                    }else if(res.status==422){
+                    }else if(res.status==402){
                         for(let i in res.data.errors){
                             this.e(res.data.errors[i][0])
                         }
                     }else{
-                        this.swr()
+                        this.swr(res.data.msg)
                     }
                 }
                 this.isLogging = false
