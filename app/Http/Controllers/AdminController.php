@@ -6,6 +6,7 @@ use App\Models\Tag;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Role;
+use Facade\FlareClient\Http\Exceptions\NotFound;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \Illuminate\Support\Facades\Log;
@@ -32,7 +33,26 @@ class AdminController extends Controller
         if($request->path() == 'login'){ //bila kamu admin atau editor, anda akan masuk ke homepage
             return redirect('/');
         }
-        return view('welcome');
+
+        return $this->checkForPermisson($user, $request);
+
+    }
+
+    public function checkForPermisson($user, $request){
+        $permission = json_decode($user->role->permission);
+
+        $hasPermission = false;
+        //if(!$hasPermission) return view('welcome');
+        foreach($permission as $p){
+            if($p->name == $request->path()){
+                if($p->read){
+                    $hasPermission = true;
+                }
+            }
+        }
+
+        if($hasPermission) return view('welcome');
+        return view('notFound');
     }
 
     public function logout(){

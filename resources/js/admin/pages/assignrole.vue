@@ -45,11 +45,10 @@
                                     <Icon type="md-close" slot="close"></Icon>
                                 </i-Switch></td>
 							</tr>
-                            <div class="center_button">
-                                        <Button type="primary" :loading="isSending" :disabled="isSending" @click="assignRoles">Assign</Button>
-                                    </div>
 						</table>
-
+                        <div class="center_button">
+                            <Button type="primary" :loading="isSending" :disabled="isSending" @click="assignRoles">Assign</Button>
+                        </div>
 					</div>
 				</div>
 
@@ -71,22 +70,20 @@ import {mapGetters} from 'vuex'
 				isSending		: false,
 				roles 			: [],
 				resources		: [
-                    {resourceName: 'Home', read: true, write: false, update: false, delete: false, name: 'Home'},
-                    {resourceName: 'Tags', read: false, write: false, update: false, delete: false, name: 'Tags'},
-                    {resourceName: 'Category', read: false, write: false, update: false, delete: false, name: 'Category'},
-                    {resourceName: 'Role', read: false, write: false, update: false, delete: false, name: 'Role'},
-                    {resourceName: 'Assign Role', read: false, write: false, update: false, delete: false, name: 'Assignrole'},
+                    {resourceName: 'Home', read: false, write: false, update: false, delete: false, icon: 'ios-home', name: '/'},
+                    {resourceName: 'Tags', read: false, write: false, update: false, delete: false, icon: 'ios-desktop', name: 'tags'},
+                    {resourceName: 'Category', read: false, write: false, update: false, delete: false, icon: 'ios-apps', name: 'category'},
+                    {resourceName: 'Admin users', read: false, write: false, update: false, delete: false, icon: 'ios-people', name: 'adminusers'},
+                    {resourceName: 'Role', read: false, write: false, update: false, delete: false, icon: 'md-lock', name: 'role'},
+                    {resourceName: 'Assign Role', read: false, write: false, update: false, delete: false, icon: 'md-contacts', name: 'assignrole'},
                 ],
 				defaultResourcesPermission: [
-                    {resourceName: 'Home', read: false, write: false, update: false, delete: false, name: 'Home'},
-                    {resourceName: 'Tags', read: false, write: false, update: false, delete: false, name: 'tags'},
-                    {resourceName: 'Category', read: false, write: false, update: false, delete: false, name: 'category'},
-                    {resourceName: 'Create blogs', read: false, write: false, update: false, delete: false, name: 'createBlog'},
-                    {resourceName: 'Blogs', read: false, write: false, update: false, delete: false, name: 'blogs'},
-
-                    {resourceName: 'Admin users', read: false, write: false, update: false, delete: false, name: 'adminusers'},
-                    {resourceName: 'Role', read: false, write: false, update: false, delete: false, name: 'role'},
-                    {resourceName: 'Assign Role', read: false, write: false, update: false, delete: false, name: 'assignRole'},
+                    {resourceName: 'Home', read: false, write: false, update: false, delete: false, icon: 'ios-home', name: '/'},
+                    {resourceName: 'Tags', read: false, write: false, update: false, delete: false, icon: 'ios-desktop', name: 'tags'},
+                    {resourceName: 'Category', read: false, write: false, update: false, delete: false, icon: 'ios-apps', name: 'category'},
+                    {resourceName: 'Admin users', read: false, write: false, update: false, delete: false, icon: 'ios-people', name: 'adminusers'},
+                    {resourceName: 'Role', read: false, write: false, update: false, delete: false, icon: 'md-lock', name: 'role'},
+                    {resourceName: 'Assign Role', read: false, write: false, update: false, delete: false, icon: 'md-contacts',  name: 'assignrole'},
 
                 ],
 
@@ -101,6 +98,8 @@ import {mapGetters} from 'vuex'
 				const res = await this.callApi('post', 'app/assign_roles', {'permission' : data, id: this.data, })
 				if(res.status==200){
                     this.s('Role berhasil didaftarkan!')
+                    let index = this.roles.findIndex(role => role.id == this.data.id)
+                    this.roles[index].permission = data
 				}else{
 					this.swr()
 				}
@@ -127,6 +126,7 @@ import {mapGetters} from 'vuex'
                 this.data.id = res.data[0].id
                 if(res.data[0].permission){
                     this.resources = JSON.parse(res.data[0].permission)
+                    //this.resources = this.defaultResourcesPermission
                 }
             }
 		} else {

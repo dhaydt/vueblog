@@ -23,37 +23,37 @@ const routes = [
     {
         path: '/',
         component: home,
-        name: 'Home'
+        name: '/'
     },
     {
         path: '/tags',
         component: tags,
-        name: 'Tags'
+        name: 'tags'
     },
     {
-        path: '/cat',
+        path: '/category',
         component: category,
-        name: 'Category'
+        name: 'category'
     },
     {
         path: '/adminusers',
         component: adminusers,
-        name: 'Adminusers'
+        name: 'adminusers'
     },
     {
         path: '/login',
         component: login,
-        name: 'Login'
+        name: 'login'
     },
     {
         path: '/role',
         component: role,
-        name: 'Role'
+        name: 'role'
     },
     {
         path: '/assignrole',
         component: assignrole,
-        name: 'Assignrole'
+        name: 'assignrole'
     },
 
 

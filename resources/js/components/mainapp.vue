@@ -19,14 +19,15 @@
         <div class="_1side_menu_list">
         <ul class="_1side_menu_list_ul">
             <li v-for="(menuItem, i) in permission" :key="i" v-if="permission.length && menuItem.read">
-            <router-link :to="'/'+menuItem.name"><Icon type="ios-speedometer" /> {{menuItem.resourceName}}</router-link>
+            <router-link :to="menuItem.name"><Icon :type="menuItem.icon" /> {{menuItem.resourceName}}</router-link>
             </li>
-            <li><li><router-link to="/"><Icon type="ios-home" /> Dashboard</router-link></li>
+
+            <!-- <li><li><router-link to="/"><Icon type="ios-home" /> Dashboard</router-link></li>
             <li><router-link to="tags"><Icon type="ios-desktop" /> Tags</router-link></li>
             <li><router-link to="cat"><Icon type="ios-apps" /> Kategori</router-link></li>
             <li><router-link to="adminusers"><Icon type="ios-people" /> Users</router-link></li>
             <li><router-link to="role"><Icon type="md-lock" /> Role Management</router-link></li>
-            <li><router-link to="assignrole"><Icon type="md-contacts" /> Assign Roles</router-link></li>
+            <li><router-link to="assignrole"><Icon type="md-contacts" /> Assign Roles</router-link></li> -->
 
 
             <li><a href="/logout"><Icon type="md-log-out" /> Logout</a></li>
@@ -57,7 +58,7 @@
 
 <script>
 export default {
-    props: ['user'],
+    props: ['user', 'permission'],
 
     data() {
         return {
@@ -65,7 +66,8 @@ export default {
         }
     },
     created(){
-        this.$store.commit('updateUser', this.user)
+        this.$store.commit('updateUser', this.user),
+        console.log(this.permission)
     }
 }
 </script>

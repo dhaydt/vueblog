@@ -2506,7 +2506,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2519,53 +2518,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       roles: [],
       resources: [{
         resourceName: 'Home',
-        read: true,
+        read: false,
         write: false,
         update: false,
         "delete": false,
-        name: 'Home'
+        icon: 'ios-home',
+        name: '/'
       }, {
         resourceName: 'Tags',
         read: false,
         write: false,
         update: false,
         "delete": false,
-        name: 'Tags'
-      }, {
-        resourceName: 'Category',
-        read: false,
-        write: false,
-        update: false,
-        "delete": false,
-        name: 'Category'
-      }, {
-        resourceName: 'Role',
-        read: false,
-        write: false,
-        update: false,
-        "delete": false,
-        name: 'Role'
-      }, {
-        resourceName: 'Assign Role',
-        read: false,
-        write: false,
-        update: false,
-        "delete": false,
-        name: 'Assignrole'
-      }],
-      defaultResourcesPermission: [{
-        resourceName: 'Home',
-        read: false,
-        write: false,
-        update: false,
-        "delete": false,
-        name: 'Home'
-      }, {
-        resourceName: 'Tags',
-        read: false,
-        write: false,
-        update: false,
-        "delete": false,
+        icon: 'ios-desktop',
         name: 'tags'
       }, {
         resourceName: 'Category',
@@ -2573,27 +2538,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         write: false,
         update: false,
         "delete": false,
+        icon: 'ios-apps',
         name: 'category'
-      }, {
-        resourceName: 'Create blogs',
-        read: false,
-        write: false,
-        update: false,
-        "delete": false,
-        name: 'createBlog'
-      }, {
-        resourceName: 'Blogs',
-        read: false,
-        write: false,
-        update: false,
-        "delete": false,
-        name: 'blogs'
       }, {
         resourceName: 'Admin users',
         read: false,
         write: false,
         update: false,
         "delete": false,
+        icon: 'ios-people',
         name: 'adminusers'
       }, {
         resourceName: 'Role',
@@ -2601,6 +2554,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         write: false,
         update: false,
         "delete": false,
+        icon: 'md-lock',
         name: 'role'
       }, {
         resourceName: 'Assign Role',
@@ -2608,7 +2562,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         write: false,
         update: false,
         "delete": false,
-        name: 'assignRole'
+        icon: 'md-contacts',
+        name: 'assignrole'
+      }],
+      defaultResourcesPermission: [{
+        resourceName: 'Home',
+        read: false,
+        write: false,
+        update: false,
+        "delete": false,
+        icon: 'ios-home',
+        name: '/'
+      }, {
+        resourceName: 'Tags',
+        read: false,
+        write: false,
+        update: false,
+        "delete": false,
+        icon: 'ios-desktop',
+        name: 'tags'
+      }, {
+        resourceName: 'Category',
+        read: false,
+        write: false,
+        update: false,
+        "delete": false,
+        icon: 'ios-apps',
+        name: 'category'
+      }, {
+        resourceName: 'Admin users',
+        read: false,
+        write: false,
+        update: false,
+        "delete": false,
+        icon: 'ios-people',
+        name: 'adminusers'
+      }, {
+        resourceName: 'Role',
+        read: false,
+        write: false,
+        update: false,
+        "delete": false,
+        icon: 'md-lock',
+        name: 'role'
+      }, {
+        resourceName: 'Assign Role',
+        read: false,
+        write: false,
+        update: false,
+        "delete": false,
+        icon: 'md-contacts',
+        name: 'assignrole'
       }]
     };
   },
@@ -2618,7 +2622,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var data, res;
+        var data, res, index;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2635,6 +2639,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 if (res.status == 200) {
                   _this.s('Role berhasil didaftarkan!');
+
+                  index = _this.roles.findIndex(function (role) {
+                    return role.id == _this.data.id;
+                  });
+                  _this.roles[index].permission = data;
                 } else {
                   _this.swr();
                 }
@@ -2685,7 +2694,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this3.data.id = res.data[0].id;
 
                   if (res.data[0].permission) {
-                    _this3.resources = JSON.parse(res.data[0].permission);
+                    _this3.resources = JSON.parse(res.data[0].permission); //this.resources = this.defaultResourcesPermission
                   }
                 }
               } else {
@@ -4034,15 +4043,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user'],
+  props: ['user', 'permission'],
   data: function data() {
     return {
       isLoggedIn: false
     };
   },
   created: function created() {
-    this.$store.commit('updateUser', this.user);
+    this.$store.commit('updateUser', this.user), console.log(this.permission);
   }
 });
 
@@ -87768,29 +87778,29 @@ var render = function() {
                         1
                       )
                     ])
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "center_button" },
-                    [
-                      _c(
-                        "Button",
-                        {
-                          attrs: {
-                            type: "primary",
-                            loading: _vm.isSending,
-                            disabled: _vm.isSending
-                          },
-                          on: { click: _vm.assignRoles }
-                        },
-                        [_vm._v("Assign")]
-                      )
-                    ],
-                    1
-                  )
+                  })
                 ],
                 2
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "center_button" },
+                [
+                  _c(
+                    "Button",
+                    {
+                      attrs: {
+                        type: "primary",
+                        loading: _vm.isSending,
+                        disabled: _vm.isSending
+                      },
+                      on: { click: _vm.assignRoles }
+                    },
+                    [_vm._v("Assign")]
+                  )
+                ],
+                1
               )
             ])
           ]
@@ -89099,10 +89109,10 @@ var render = function() {
                               [
                                 _c(
                                   "router-link",
-                                  { attrs: { to: "/" + menuItem.name } },
+                                  { attrs: { to: menuItem.name } },
                                   [
                                     _c("Icon", {
-                                      attrs: { type: "ios-speedometer" }
+                                      attrs: { type: menuItem.icon }
                                     }),
                                     _vm._v(" " + _vm._s(menuItem.resourceName))
                                   ],
@@ -89113,103 +89123,6 @@ var render = function() {
                             )
                           : _vm._e()
                       }),
-                      _vm._v(" "),
-                      _c("li"),
-                      _c(
-                        "li",
-                        [
-                          _c(
-                            "router-link",
-                            { attrs: { to: "/" } },
-                            [
-                              _c("Icon", { attrs: { type: "ios-home" } }),
-                              _vm._v(" Dashboard")
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        [
-                          _c(
-                            "router-link",
-                            { attrs: { to: "tags" } },
-                            [
-                              _c("Icon", { attrs: { type: "ios-desktop" } }),
-                              _vm._v(" Tags")
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        [
-                          _c(
-                            "router-link",
-                            { attrs: { to: "cat" } },
-                            [
-                              _c("Icon", { attrs: { type: "ios-apps" } }),
-                              _vm._v(" Kategori")
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        [
-                          _c(
-                            "router-link",
-                            { attrs: { to: "adminusers" } },
-                            [
-                              _c("Icon", { attrs: { type: "ios-people" } }),
-                              _vm._v(" Users")
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        [
-                          _c(
-                            "router-link",
-                            { attrs: { to: "role" } },
-                            [
-                              _c("Icon", { attrs: { type: "md-lock" } }),
-                              _vm._v(" Role Management")
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        [
-                          _c(
-                            "router-link",
-                            { attrs: { to: "assignrole" } },
-                            [
-                              _c("Icon", { attrs: { type: "md-contacts" } }),
-                              _vm._v(" Assign Roles")
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
                       _vm._v(" "),
                       _c("li", [
                         _c(
@@ -107506,31 +107419,31 @@ var routes = [//project route
 {
   path: '/',
   component: _components_pages_home__WEBPACK_IMPORTED_MODULE_6__["default"],
-  name: 'Home'
+  name: '/'
 }, {
   path: '/tags',
   component: _admin_pages_tags__WEBPACK_IMPORTED_MODULE_7__["default"],
-  name: 'Tags'
+  name: 'tags'
 }, {
-  path: '/cat',
+  path: '/category',
   component: _admin_pages_category__WEBPACK_IMPORTED_MODULE_8__["default"],
-  name: 'Category'
+  name: 'category'
 }, {
   path: '/adminusers',
   component: _admin_pages_adminusers__WEBPACK_IMPORTED_MODULE_9__["default"],
-  name: 'Adminusers'
+  name: 'adminusers'
 }, {
   path: '/login',
   component: _admin_pages_login__WEBPACK_IMPORTED_MODULE_10__["default"],
-  name: 'Login'
+  name: 'login'
 }, {
   path: '/role',
   component: _admin_pages_role__WEBPACK_IMPORTED_MODULE_11__["default"],
-  name: 'Role'
+  name: 'role'
 }, {
   path: '/assignrole',
   component: _admin_pages_assignrole__WEBPACK_IMPORTED_MODULE_12__["default"],
-  name: 'Assignrole'
+  name: 'assignrole'
 }, //test route
 {
   path: '/vue',
