@@ -93,7 +93,7 @@ import {mapGetters} from 'vuex'
 		data() {
 			return{
 				data 			: {
-									tagName: ''
+                                    tagName: '',
 								},
 				addModal 		: false,
 				editModal 		: false,
@@ -107,7 +107,8 @@ import {mapGetters} from 'vuex'
 				isDeleting 		: false,
 				deleteItem 		: {},
 				deletingIndex	: -1,
-				websiteSetting : [],
+                websiteSetting : [],
+                //isReadPermitted : false
 
 			}
 		},
@@ -199,6 +200,7 @@ import {mapGetters} from 'vuex'
 		},
 
 	async created(){
+        console.log(this.isReadPermitted)
         const res = await this.callApi('get', 'app/get_tags')
 		if(res.status==200){
 			this.tags = res.data
