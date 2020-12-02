@@ -6,7 +6,7 @@
 				<!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
 					<p class="_title0"><Icon type="md-pricetags" /> Tags
-						<Button @click="addModal = true" type="default" size="small"><Icon type="md-add" /> Tag</Button> </p>
+						<Button @click="addModal = true" v-if="isWritePermitted" type="default" size="small"><Icon type="md-add" /> Tag</Button> </p>
 
 					<div class="_overflow _table_div">
 						<table class="_table">
@@ -27,10 +27,10 @@
 								<td>{{tag.created_at}}</td>
 								<td>
 									<Tooltip content="Edit" placement="left-start">
-										<Button @click="showEditModal(tag, i)" type="info" size="small"><Icon type="ios-create" /></Button>
+										<Button v-if="isUpdatePermitted" @click="showEditModal(tag, i)" type="info" size="small"><Icon type="ios-create" /></Button>
 									</Tooltip>
 									<Tooltip content="Hapus" placement="right-start">
-										<Button @click="showDeletingModal(tag, i)" :loading="tag.isDeleting" type="error" size="small" ><Icon type="ios-trash-outline"></Icon></Button>
+										<Button v-if="isDeletePermitted" @click="showDeletingModal(tag, i)" :loading="tag.isDeleting" type="error" size="small" ><Icon type="ios-trash-outline"></Icon></Button>
 									</Tooltip>
 								</td>
 							</tr>
@@ -200,7 +200,7 @@ import {mapGetters} from 'vuex'
 		},
 
 	async created(){
-        console.log(this.isReadPermitted)
+        console.log(this.isWritePermitted)
         const res = await this.callApi('get', 'app/get_tags')
 		if(res.status==200){
 			this.tags = res.data

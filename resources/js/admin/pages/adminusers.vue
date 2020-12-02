@@ -14,7 +14,7 @@
 								<th>id</th>
 								<th>Nama</th>
 								<th>Email</th>
-								<th>Tipe User</th>
+								<th>Tipe</th>
 								<th>diBuat</th>
 								<th>diubah</th>
 								<th>Aksi</th>
@@ -98,9 +98,7 @@
 
                     <div class="space">
                         <Select v-model="editData.role_id"  placeholder="Select admin type">
-                            <Option value="Admin">Admin</Option>
-                            <Option value="Editor">Editor</Option>
-                            <!-- <Option value="Editor" >Editor</Option> -->
+                            <Option :value="r.id" v-for="(r, i) in roles" :key="i" v-if="roles.length">{{r.roleName}}</Option>
                         </Select>
                     </div>
                     <div slot="footer">

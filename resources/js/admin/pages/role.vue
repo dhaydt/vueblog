@@ -64,6 +64,7 @@
 								:mask-closable="false"
 								:closable="false"
 								>
+								<Input v-model="editData.id" clearable placeholder="Edit tipe Role" style="width: 300px" @keyup.enter.native="editRole()" />
 								<Input v-model="editData.roleName" clearable placeholder="Edit tipe Role" style="width: 300px" @keyup.enter.native="editRole()" />
 
 								<div slot="footer">
@@ -107,6 +108,7 @@ import {mapGetters} from 'vuex'
 				isAdding 		: false,
 				roles 			: [],
 				editData 		: {
+                                    id: '',
                                     roleName: '',
                                     isAdmin: ''
 								},
@@ -145,10 +147,12 @@ import {mapGetters} from 'vuex'
 			},
 			//edit data tag
 			async editRole() {
-				if(this.editData.roleName.trim()=='') return this.e('Tipe role belum di isi')
+                if(this.editData.roleName.trim()=='') return this.e('Tipe role belum di isi')
+                if(this.editData.id=='') return this.e('Tipe Admin belum di isi')
 				const res = await this.callApi('post', 'app/edit_role', this.editData)
 				if(res.status===200){
 					this.roles[this.index].roleName = this.editData.roleName
+					this.roles[this.index].id = this.editData.id
 					this.s('Tag berhasil diedit')
 					this.editModal = false
 

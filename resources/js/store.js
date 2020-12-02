@@ -24,7 +24,7 @@ export default new Vuex.Store({
             return state.deleteModalObj
         },
         getUserPermission(state){
-                    return state.deleteModalObj
+                    return state.userPermission
                 },
 
     },

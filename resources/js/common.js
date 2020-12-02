@@ -75,13 +75,13 @@ export default {
             return this.checkUserPermission('read')
         },
         isWritePermitted(){
-            //return this.checkUserPermission('write')
+            return this.checkUserPermission('write')
         },
         isUpdatePermitted(){
-            //return this.checkUserPermission('update')
+            return this.checkUserPermission('update')
         },
         isDeletePermitted(){
-            //return this.checkUserPermission('delete')
+            return this.checkUserPermission('delete')
         },
     },
 }

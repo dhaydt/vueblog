@@ -2164,8 +2164,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2648,7 +2646,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.swr();
                 }
 
-              case 5:
+                setTimeout(function () {
+                  return window.location.reload();
+                }, 500);
+
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -3405,6 +3407,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3419,6 +3422,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isAdding: false,
       roles: [],
       editData: {
+        id: '',
         roleName: '',
         isAdmin: ''
       },
@@ -3507,14 +3511,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return", _this2.e('Tipe role belum di isi'));
 
               case 2:
-                _context2.next = 4;
-                return _this2.callApi('post', 'app/edit_role', _this2.editData);
+                if (!(_this2.editData.id == '')) {
+                  _context2.next = 4;
+                  break;
+                }
+
+                return _context2.abrupt("return", _this2.e('Tipe Admin belum di isi'));
 
               case 4:
+                _context2.next = 6;
+                return _this2.callApi('post', 'app/edit_role', _this2.editData);
+
+              case 6:
                 res = _context2.sent;
 
                 if (res.status === 200) {
                   _this2.roles[_this2.index].roleName = _this2.editData.roleName;
+                  _this2.roles[_this2.index].id = _this2.editData.id;
 
                   _this2.s('Tag berhasil diedit');
 
@@ -3529,7 +3542,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 }
 
-              case 6:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -3943,7 +3956,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              console.log(_this4.isReadPermitted);
+              console.log(_this4.isWritePermitted);
               _context4.next = 3;
               return _this4.callApi('get', 'app/get_tags');
 
@@ -87504,15 +87517,13 @@ var render = function() {
                         expression: "editData.role_id"
                       }
                     },
-                    [
-                      _c("Option", { attrs: { value: "Admin" } }, [
-                        _vm._v("Admin")
-                      ]),
-                      _vm._v(" "),
-                      _c("Option", { attrs: { value: "Editor" } }, [
-                        _vm._v("Editor")
-                      ])
-                    ],
+                    _vm._l(_vm.roles, function(r, i) {
+                      return _vm.roles.length
+                        ? _c("Option", { key: i, attrs: { value: r.id } }, [
+                            _vm._v(_vm._s(r.roleName))
+                          ])
+                        : _vm._e()
+                    }),
                     1
                   )
                 ],
@@ -87573,7 +87584,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Email")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Tipe User")]),
+      _c("th", [_vm._v("Tipe")]),
       _vm._v(" "),
       _c("th", [_vm._v("diBuat")]),
       _vm._v(" "),
@@ -88687,6 +88698,29 @@ var render = function() {
                   }
                 },
                 model: {
+                  value: _vm.editData.id,
+                  callback: function($$v) {
+                    _vm.$set(_vm.editData, "id", $$v)
+                  },
+                  expression: "editData.id"
+                }
+              }),
+              _vm._v(" "),
+              _c("Input", {
+                staticStyle: { width: "300px" },
+                attrs: { clearable: "", placeholder: "Edit tipe Role" },
+                nativeOn: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.editRole()
+                  }
+                },
+                model: {
                   value: _vm.editData.roleName,
                   callback: function($$v) {
                     _vm.$set(_vm.editData, "roleName", $$v)
@@ -88794,19 +88828,24 @@ var render = function() {
                 [
                   _c("Icon", { attrs: { type: "md-pricetags" } }),
                   _vm._v(" Tags\n\t\t\t\t\t\t"),
-                  _c(
-                    "Button",
-                    {
-                      attrs: { type: "default", size: "small" },
-                      on: {
-                        click: function($event) {
-                          _vm.addModal = true
-                        }
-                      }
-                    },
-                    [_c("Icon", { attrs: { type: "md-add" } }), _vm._v(" Tag")],
-                    1
-                  )
+                  _vm.isWritePermitted
+                    ? _c(
+                        "Button",
+                        {
+                          attrs: { type: "default", size: "small" },
+                          on: {
+                            click: function($event) {
+                              _vm.addModal = true
+                            }
+                          }
+                        },
+                        [
+                          _c("Icon", { attrs: { type: "md-add" } }),
+                          _vm._v(" Tag")
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -88841,23 +88880,28 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c(
-                                      "Button",
-                                      {
-                                        attrs: { type: "info", size: "small" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.showEditModal(tag, i)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("Icon", {
-                                          attrs: { type: "ios-create" }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                    _vm.isUpdatePermitted
+                                      ? _c(
+                                          "Button",
+                                          {
+                                            attrs: {
+                                              type: "info",
+                                              size: "small"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.showEditModal(tag, i)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("Icon", {
+                                              attrs: { type: "ios-create" }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e()
                                   ],
                                   1
                                 ),
@@ -88871,27 +88915,34 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c(
-                                      "Button",
-                                      {
-                                        attrs: {
-                                          loading: tag.isDeleting,
-                                          type: "error",
-                                          size: "small"
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.showDeletingModal(tag, i)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("Icon", {
-                                          attrs: { type: "ios-trash-outline" }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                    _vm.isDeletePermitted
+                                      ? _c(
+                                          "Button",
+                                          {
+                                            attrs: {
+                                              loading: tag.isDeleting,
+                                              type: "error",
+                                              size: "small"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.showDeletingModal(
+                                                  tag,
+                                                  i
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("Icon", {
+                                              attrs: {
+                                                type: "ios-trash-outline"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e()
                                   ],
                                   1
                                 )
@@ -107125,11 +107176,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     isReadPermitted: function isReadPermitted() {
       return this.checkUserPermission('read');
     },
-    isWritePermitted: function isWritePermitted() {//return this.checkUserPermission('write')
+    isWritePermitted: function isWritePermitted() {
+      return this.checkUserPermission('write');
     },
-    isUpdatePermitted: function isUpdatePermitted() {//return this.checkUserPermission('update')
+    isUpdatePermitted: function isUpdatePermitted() {
+      return this.checkUserPermission('update');
     },
-    isDeletePermitted: function isDeletePermitted() {//return this.checkUserPermission('delete')
+    isDeletePermitted: function isDeletePermitted() {
+      return this.checkUserPermission('delete');
     }
   })
 });
@@ -107558,7 +107612,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       return state.deleteModalObj;
     },
     getUserPermission: function getUserPermission(state) {
-      return state.deleteModalObj;
+      return state.userPermission;
     }
   },
   mutations: {

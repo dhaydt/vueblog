@@ -66,7 +66,7 @@ import {mapGetters} from 'vuex'
 			return{
 				data 			: {
 									id: null
-								},
+                                },
 				isSending		: false,
 				roles 			: [],
 				resources		: [
@@ -102,7 +102,9 @@ import {mapGetters} from 'vuex'
                     this.roles[index].permission = data
 				}else{
 					this.swr()
-				}
+                }
+                setTimeout(() => window.location.reload(), 500);
+
 			},
 
 			changeAdmin(){

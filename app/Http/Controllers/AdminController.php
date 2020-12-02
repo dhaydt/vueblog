@@ -266,9 +266,11 @@ class AdminController extends Controller
         // validate request
         $this->validate($request, [
             'roleName' => 'required',
+            'id'       => 'required',
         ]);
         return Role::where('id', $request->id)->update([
             'roleName' => $request->roleName,
+            'id' => $request->id,
         ]);
     }
 
