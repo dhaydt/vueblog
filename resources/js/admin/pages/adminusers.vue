@@ -5,7 +5,7 @@
 
                 <!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
-					<p class="_title0"><Icon type="md-contacts" /> Administrator <Button @click="addModal=true"><Icon type="md-add" /> User</Button></p>
+					<p class="_title0"><Icon type="md-contacts" /> Administrator <Button v-if="isWritePermitted" @click="addModal=true"><Icon type="md-add" /> User</Button></p>
 
                         <div class="_overflow _table_div">
 						<table class="_table">
@@ -32,11 +32,12 @@
 								<td>{{user.updated_at}}</td>
 								<td>
 									<Tooltip content="Edit" placement="left-start">
-										<Button @click="showEditModal(user, i)" type="info" size="small"><Icon type="ios-create" /></Button>
+										<Button @click="showEditModal(user, i)" v-if="isUpdatePermitted" type="info" size="small"><Icon type="ios-create" /></Button>
 									</Tooltip>
 									<Tooltip content="Hapus" placement="right-start">
 										<Button @click="showDeletingModal(user, i)"
                                         :loading="user.isDeleting"
+                                        v-if="isDeletePermitted"
                                         type="error" size="small" >
                                         <Icon type="ios-trash-outline"></Icon></Button>
 									</Tooltip>

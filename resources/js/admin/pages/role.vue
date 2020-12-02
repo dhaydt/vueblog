@@ -6,7 +6,7 @@
 				<!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
 					<p class="_title0"><Icon type="md-unlock" /> Roles Management
-						<Button @click="addModal = true" type="default" size="small"><Icon type="md-add" /> Role</Button> </p>
+						<Button @click="addModal = true" v-if="isWritePermitted" type="default" size="small"><Icon type="md-add" /> Role</Button> </p>
 
 					<div class="_overflow _table_div">
 						<table class="_table">
@@ -27,10 +27,10 @@
 								<td>{{role.created_at}}</td>
 								<td>
 									<Tooltip content="Edit" placement="left-start">
-										<Button @click="showEditModal(role, i)" type="info" size="small"><Icon type="ios-create" /></Button>
+										<Button @click="showEditModal(role, i)" v-if="isUpdatePermitted" type="info" size="small"><Icon type="ios-create" /></Button>
 									</Tooltip>
 									<Tooltip content="Hapus" placement="right-start">
-                                        <Button type="text" size="small" @click="showDeletingModal(role, i)"  :loading="role.isDeleting" ghost><Icon ghost type="ios-trash" /></Button>
+                                        <Button type="text" v-if="isDeletePermitted" size="small" @click="showDeletingModal(role, i)"  :loading="role.isDeleting" ghost><Icon ghost type="ios-trash" /></Button>
                                     </Tooltip>
 								</td>
 							</tr>

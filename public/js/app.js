@@ -2164,6 +2164,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2740,6 +2741,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -87170,21 +87172,23 @@ var render = function() {
                 [
                   _c("Icon", { attrs: { type: "md-contacts" } }),
                   _vm._v(" Administrator "),
-                  _c(
-                    "Button",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.addModal = true
-                        }
-                      }
-                    },
-                    [
-                      _c("Icon", { attrs: { type: "md-add" } }),
-                      _vm._v(" User")
-                    ],
-                    1
-                  )
+                  _vm.isWritePermitted
+                    ? _c(
+                        "Button",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.addModal = true
+                            }
+                          }
+                        },
+                        [
+                          _c("Icon", { attrs: { type: "md-add" } }),
+                          _vm._v(" User")
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -87225,23 +87229,31 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c(
-                                      "Button",
-                                      {
-                                        attrs: { type: "info", size: "small" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.showEditModal(user, i)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("Icon", {
-                                          attrs: { type: "ios-create" }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                    _vm.isUpdatePermitted
+                                      ? _c(
+                                          "Button",
+                                          {
+                                            attrs: {
+                                              type: "info",
+                                              size: "small"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.showEditModal(
+                                                  user,
+                                                  i
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("Icon", {
+                                              attrs: { type: "ios-create" }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e()
                                   ],
                                   1
                                 ),
@@ -87255,30 +87267,34 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c(
-                                      "Button",
-                                      {
-                                        attrs: {
-                                          loading: user.isDeleting,
-                                          type: "error",
-                                          size: "small"
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.showDeletingModal(
-                                              user,
-                                              i
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("Icon", {
-                                          attrs: { type: "ios-trash-outline" }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                    _vm.isDeletePermitted
+                                      ? _c(
+                                          "Button",
+                                          {
+                                            attrs: {
+                                              loading: user.isDeleting,
+                                              type: "error",
+                                              size: "small"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.showDeletingModal(
+                                                  user,
+                                                  i
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("Icon", {
+                                              attrs: {
+                                                type: "ios-trash-outline"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e()
                                   ],
                                   1
                                 )
@@ -87631,29 +87647,31 @@ var render = function() {
               [
                 _c("Icon", { attrs: { type: "md-pricetags" } }),
                 _vm._v(" Assign Role\n\t\t\t\t\t\t"),
-                _c(
-                  "Select",
-                  {
-                    staticStyle: { width: "360px" },
-                    attrs: { placeholder: "Select admin type" },
-                    on: { "on-change": _vm.changeAdmin },
-                    model: {
-                      value: _vm.data.id,
-                      callback: function($$v) {
-                        _vm.$set(_vm.data, "id", $$v)
+                _vm.isWritePermitted
+                  ? _c(
+                      "Select",
+                      {
+                        staticStyle: { width: "360px" },
+                        attrs: { placeholder: "Select admin type" },
+                        on: { "on-change": _vm.changeAdmin },
+                        model: {
+                          value: _vm.data.id,
+                          callback: function($$v) {
+                            _vm.$set(_vm.data, "id", $$v)
+                          },
+                          expression: "data.id"
+                        }
                       },
-                      expression: "data.id"
-                    }
-                  },
-                  _vm._l(_vm.roles, function(r, i) {
-                    return _vm.roles.length
-                      ? _c("Option", { key: i, attrs: { value: r.id } }, [
-                          _vm._v(_vm._s(r.roleName))
-                        ])
-                      : _vm._e()
-                  }),
-                  1
-                )
+                      _vm._l(_vm.roles, function(r, i) {
+                        return _vm.roles.length
+                          ? _c("Option", { key: i, attrs: { value: r.id } }, [
+                              _vm._v(_vm._s(r.roleName))
+                            ])
+                          : _vm._e()
+                      }),
+                      1
+                    )
+                  : _vm._e()
               ],
               1
             ),
@@ -87881,22 +87899,24 @@ var render = function() {
                 [
                   _c("Icon", { attrs: { type: "ios-grid" } }),
                   _vm._v("Kategori Blog "),
-                  _c(
-                    "Button",
-                    {
-                      attrs: { type: "default", size: "small" },
-                      on: {
-                        click: function($event) {
-                          _vm.addModal = true
-                        }
-                      }
-                    },
-                    [
-                      _c("Icon", { attrs: { type: "md-add" } }),
-                      _vm._v(" Kategori")
-                    ],
-                    1
-                  )
+                  _vm.isWritePermitted
+                    ? _c(
+                        "Button",
+                        {
+                          attrs: { type: "default", size: "small" },
+                          on: {
+                            click: function($event) {
+                              _vm.addModal = true
+                            }
+                          }
+                        },
+                        [
+                          _c("Icon", { attrs: { type: "md-add" } }),
+                          _vm._v(" Kategori")
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -87935,26 +87955,31 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c(
-                                      "Button",
-                                      {
-                                        attrs: { type: "info", size: "small" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.showEditModal(
-                                              category,
-                                              i
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("Icon", {
-                                          attrs: { type: "ios-create" }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                    _vm.isUpdatePermitted
+                                      ? _c(
+                                          "Button",
+                                          {
+                                            attrs: {
+                                              type: "info",
+                                              size: "small"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.showEditModal(
+                                                  category,
+                                                  i
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("Icon", {
+                                              attrs: { type: "ios-create" }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e()
                                   ],
                                   1
                                 ),
@@ -87968,30 +87993,34 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c(
-                                      "Button",
-                                      {
-                                        attrs: {
-                                          loading: category.isDeleting,
-                                          type: "error",
-                                          size: "small"
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.showDeletingModal(
-                                              category,
-                                              i
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("Icon", {
-                                          attrs: { type: "ios-trash-outline" }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                    _vm.isDeletePermitted
+                                      ? _c(
+                                          "Button",
+                                          {
+                                            attrs: {
+                                              loading: category.isDeleting,
+                                              type: "error",
+                                              size: "small"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.showDeletingModal(
+                                                  category,
+                                                  i
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("Icon", {
+                                              attrs: {
+                                                type: "ios-trash-outline"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e()
                                   ],
                                   1
                                 )
@@ -88441,22 +88470,24 @@ var render = function() {
                 [
                   _c("Icon", { attrs: { type: "md-unlock" } }),
                   _vm._v(" Roles Management\n\t\t\t\t\t\t"),
-                  _c(
-                    "Button",
-                    {
-                      attrs: { type: "default", size: "small" },
-                      on: {
-                        click: function($event) {
-                          _vm.addModal = true
-                        }
-                      }
-                    },
-                    [
-                      _c("Icon", { attrs: { type: "md-add" } }),
-                      _vm._v(" Role")
-                    ],
-                    1
-                  )
+                  _vm.isWritePermitted
+                    ? _c(
+                        "Button",
+                        {
+                          attrs: { type: "default", size: "small" },
+                          on: {
+                            click: function($event) {
+                              _vm.addModal = true
+                            }
+                          }
+                        },
+                        [
+                          _c("Icon", { attrs: { type: "md-add" } }),
+                          _vm._v(" Role")
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ],
                 1
               ),
@@ -88491,23 +88522,31 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c(
-                                      "Button",
-                                      {
-                                        attrs: { type: "info", size: "small" },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.showEditModal(role, i)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("Icon", {
-                                          attrs: { type: "ios-create" }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                    _vm.isUpdatePermitted
+                                      ? _c(
+                                          "Button",
+                                          {
+                                            attrs: {
+                                              type: "info",
+                                              size: "small"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.showEditModal(
+                                                  role,
+                                                  i
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("Icon", {
+                                              attrs: { type: "ios-create" }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e()
                                   ],
                                   1
                                 ),
@@ -88521,34 +88560,36 @@ var render = function() {
                                     }
                                   },
                                   [
-                                    _c(
-                                      "Button",
-                                      {
-                                        attrs: {
-                                          type: "text",
-                                          size: "small",
-                                          loading: role.isDeleting,
-                                          ghost: ""
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.showDeletingModal(
-                                              role,
-                                              i
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("Icon", {
-                                          attrs: {
-                                            ghost: "",
-                                            type: "ios-trash"
-                                          }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                    _vm.isDeletePermitted
+                                      ? _c(
+                                          "Button",
+                                          {
+                                            attrs: {
+                                              type: "text",
+                                              size: "small",
+                                              loading: role.isDeleting,
+                                              ghost: ""
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.showDeletingModal(
+                                                  role,
+                                                  i
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("Icon", {
+                                              attrs: {
+                                                ghost: "",
+                                                type: "ios-trash"
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      : _vm._e()
                                   ],
                                   1
                                 )

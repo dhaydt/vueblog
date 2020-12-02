@@ -6,7 +6,7 @@
 				<!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
 					<p class="_title0"><Icon type="md-pricetags" /> Assign Role
-						<Select v-model="data.id"  placeholder="Select admin type" style="width: 360px" @on-change="changeAdmin">
+						<Select v-model="data.id" v-if="isWritePermitted"  placeholder="Select admin type" style="width: 360px" @on-change="changeAdmin">
                             <Option :value="r.id" v-for="(r, i) in roles" :key="i" v-if="roles.length">{{r.roleName}}</Option>
 
                             <!-- <Option value="Editor" >Editor</Option> -->

@@ -5,7 +5,7 @@
 
 				<!--~~~~~~~ TABLE ONE ~~~~~~~~~-->
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
-					<p class="_title0"><Icon type="ios-grid" />Kategori Blog <Button @click="addModal = true" type="default" size="small">
+					<p class="_title0"><Icon type="ios-grid" />Kategori Blog <Button @click="addModal = true" v-if="isWritePermitted" type="default" size="small">
                         <Icon type="md-add" /> Kategori</Button> </p>
 
 					<div class="_overflow _table_div">
@@ -31,11 +31,12 @@
 								<td>{{category.created_at}}</td>
 								<td>
 									<Tooltip content="Edit" placement="left-start">
-										<Button @click="showEditModal(category, i)" type="info" size="small"><Icon type="ios-create" /></Button>
+										<Button @click="showEditModal(category, i)" v-if="isUpdatePermitted" type="info" size="small"><Icon type="ios-create" /></Button>
 									</Tooltip>
 									<Tooltip content="Hapus" placement="right-start">
 										<Button @click="showDeletingModal(category, i)"
                                         :loading="category.isDeleting"
+                                        v-if="isDeletePermitted"
                                         type="error" size="small" >
                                         <Icon type="ios-trash-outline"></Icon></Button>
 									</Tooltip>
@@ -243,7 +244,7 @@ import { mapGetters} from "vuex";
 					return (this.editData.iconImage = res);
 				}
 				this.data.iconImage = res;
-				
+
 
             },
             handleError (res, file) {
