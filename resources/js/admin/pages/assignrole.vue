@@ -73,7 +73,8 @@ import {mapGetters} from 'vuex'
                     {resourceName: 'Home', read: false, write: false, update: false, delete: false, icon: 'ios-home', name: '/'},
                     {resourceName: 'Tags', read: false, write: false, update: false, delete: false, icon: 'ios-desktop', name: 'tags'},
                     {resourceName: 'Category', read: false, write: false, update: false, delete: false, icon: 'ios-apps', name: 'category'},
-                    {resourceName: 'Admin users', read: false, write: false, update: false, delete: false, icon: 'ios-people', name: 'adminusers'},
+                    {resourceName: 'Create Blog', read: false, write: false, update: false, delete: false, icon: 'ios-apps', name: 'createblog'},
+                    {resourceName: 'Admin users', read: false, write: false, update: false, delete: false, icon: 'md-create', name: 'adminusers'},
                     {resourceName: 'Role', read: false, write: false, update: false, delete: false, icon: 'md-lock', name: 'role'},
                     {resourceName: 'Assign Role', read: false, write: false, update: false, delete: false, icon: 'md-contacts', name: 'assignrole'},
                 ],
@@ -81,6 +82,8 @@ import {mapGetters} from 'vuex'
                     {resourceName: 'Home', read: false, write: false, update: false, delete: false, icon: 'ios-home', name: '/'},
                     {resourceName: 'Tags', read: false, write: false, update: false, delete: false, icon: 'ios-desktop', name: 'tags'},
                     {resourceName: 'Category', read: false, write: false, update: false, delete: false, icon: 'ios-apps', name: 'category'},
+                    {resourceName: 'Create Blog', read: false, write: false, update: false, delete: false, icon: 'md-create', name: 'createblog'},
+
                     {resourceName: 'Admin users', read: false, write: false, update: false, delete: false, icon: 'ios-people', name: 'adminusers'},
                     {resourceName: 'Role', read: false, write: false, update: false, delete: false, icon: 'md-lock', name: 'role'},
                     {resourceName: 'Assign Role', read: false, write: false, update: false, delete: false, icon: 'md-contacts',  name: 'assignrole'},

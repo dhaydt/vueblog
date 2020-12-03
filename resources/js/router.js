@@ -10,6 +10,7 @@ import usecom from './vuex/usecom'
 import home from './components/pages/home'
 import tags from './admin/pages/tags'
 import category from './admin/pages/category'
+import createblog from './admin/pages/createblog'
 import adminusers from './admin/pages/adminusers'
 import login from './admin/pages/login'
 import role from './admin/pages/role'
@@ -35,6 +36,12 @@ const routes = [
         component: category,
         name: 'category'
     },
+    {
+        path: '/createblog',
+        component: createblog,
+        name: 'createblog'
+    },
+
     {
         path: '/adminusers',
         component: adminusers,
