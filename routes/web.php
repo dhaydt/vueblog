@@ -40,6 +40,7 @@ Route::prefix('app')->middleware([AdminCheck::class])->group(function(){
     Route::post('/edit_role', [AdminController::class, 'editRole']);
     Route::post('/delete_role', [AdminController::class, 'deleteRole']);
     Route::post('/assign_roles', [AdminController::class, 'assignRole']);
+    Route::post('/create-blog', [AdminController::class, 'createBlog']);
 });
 
 
