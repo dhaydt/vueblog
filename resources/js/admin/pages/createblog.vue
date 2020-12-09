@@ -67,7 +67,7 @@ var editor = new EditorJS({
             class: ImageTool,
             config: {
                 endpoints: {
-                byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
+                byFile: 'http://localhost:8000/createblog', // Your backend file uploader endpoint
                 byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
                 }
             }
@@ -77,12 +77,6 @@ var editor = new EditorJS({
 export default {
     data() {
         return {
-            config: {
-                image: {
-                    field: "image",
-                    types: "image/*",
-                },
-            },
             initData: null,
             data: {},
         };

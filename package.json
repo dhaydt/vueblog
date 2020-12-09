@@ -35,7 +35,6 @@
         "@editorjs/list": "^1.6.1",
         "sass": "^1.27.0",
         "sass-loader": "^10.0.3",
-        "tiptap": "^1.30.0",
         "tiptap-extensions": "^1.33.2",
         "view-design": "^4.4.0",
         "vue": "^2.6.12",
