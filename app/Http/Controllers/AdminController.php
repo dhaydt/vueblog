@@ -357,4 +357,16 @@ class AdminController extends Controller
             return 'not done';
         }
     }
+
+    public function slug(){
+        $title = 'this is nice title changed';
+        return Blog::create([
+            'title' => $title,
+            'post' => 'as',
+            'post_except' => 'as',
+            'user_id' => 1,
+            'metaDescription' => 'as'
+        ]);
+        return $title;
+    }
 }
