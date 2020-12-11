@@ -7,14 +7,39 @@
 				<div class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20">
 					<p class="_title0">Create blog</p>
 
-					<div class="_overflow _table_div blog_editor">
-                        <div id="editorjs"></div>
-					</div>
                     <div class="_input_field">
-                        <Input type="text" placeholder="title"></Input>
+                        <Input type="text" v-model="data.title" placeholder="Judul" />
                     </div>
+
+					<div class="_overflow _table_div blog_editor">
+                        <div id="editorjs"
+                        holder-id="codex-editor"
+                        save-button-id="save-button"
+                        :init-data="initData"
+                        @save="onSave"
+                        :config="config"
+                        >
+                    </div>
+					</div>
+
                     <div class="_input_field">
-                        <Button @click="save">save blog</Button>
+                        <Input type="textarea" v-model="data.post_excerpt" :rows="4" placeholder="Post Excerpt" />
+                    </div>
+
+                    <div class="_input_field">
+                        <Select filterable multiple placeholder="Pilih Kategori" v-model="data.tag_id">
+                            <Option v-for="(c, i) in category" :value="c.id" :key="i">{{c.categoryName}}</Option>
+                        </Select>
+                    </div>
+
+                    <div class="_input_field">
+                        <Select filterable multiple placeholder="Pilih Tag" v-model="data.tag_id">
+                            <Option v-for="(t, i) in tag" :value="t.id" :key="i">{{t.tagName}}</Option>
+                        </Select>
+                    </div>
+
+                    <div class="_input_field">
+                        <Button @click="save" :loading="isCreating" :disabled="isCreating">{{ isCreating ? 'Mohon Tunggu..' : 'Membuat Blog'}}</Button>
                     </div>
 
 				</div>
@@ -77,32 +102,105 @@ var editor = new EditorJS({
 export default {
     data() {
         return {
+            config: {
+
+            },
             initData: null,
-            data: {},
-        };
+            data: {
+                title: '',
+                post: '',
+                post_excerpt: '',
+                metaDescription: '',
+                category_id: [],
+                tag_id: [],
+                jsonData: null,
+            },
+            articleHTML: '',
+            category: [],
+            tag: [],
+            isCreating: false,
+        }
     },
     methods: {
-        onSave(response) {
-            console.log("response onSave", response);
+        async onSave(outputData) {
+            var data = outputData
+            // this.data.jsonData = JSON.stringify(data)
+            await this.outputHtml(data.blocks)
+            console.log(this.articleHTML)
+            console.log(data)
         },
 
         async save() {
-            editor.save().then((response) => {});
+            //var data = response
+            editor.save().then((outputData) => {
+                console.log('Article data: ', outputData)
+                }).catch((error) => {
+                console.log('Saving failed: ', error)
+                });
+
+        },
+        outputHtml(articleObj){
+            articleObj.map(obj => {
+                switch (obj.type) {
+                    case 'paragraph' :
+                        this.articleHTML += this.makeParagraph(obj);
+                        break;
+                    case 'image' :
+                        this.articleHTML += this.makeImage(obj);
+                        break;
+                    case 'header' :
+                        this.articleHTML += this.makeHeader(obj);
+                        break;
+                    case 'raw' :
+                        this.articleHTML += `<div class="ce-block">
+                        <div class="ce_block_content">
+                        <div class="ce_code">
+                            <code>${obj.data.html}</code>
+                        </div></div>
+                        </div>\n`;
+                        break;
+                    case 'code' :
+                        this.articleHTML += this.makeCode(obj);
+                        break;
+                    case 'list' :
+                        this.articleHTML += this.makeList(obj);
+                        break;
+                    case 'quote' :
+                        this.articleHTML += this.makeQuote(obj);
+                        break;
+                    case 'warning' :
+                        this.articleHTML += this.makeWarning(obj);
+                        break;
+                    case 'checklist' :
+                        this.articleHTML += this.makeChecklist(obj);
+                        break;
+                    case 'embed' :
+                        this.articleHTML += this.makeEmbed(obj);
+                        break;
+
+                    case'delimeter' :
+                        this.articleHTML += this.makeDelimeter(obj);
+                        break;
+                    default:
+                        return '';
+
+                }
+            });
 
         },
     },
-  // async created(){
-  // 	const [cat, tag] = await Promise.all([
-  // 		this.callApi('get', 'app/get_category'),
-  // 		this.callApi('get', 'app/get_tags'),
-  // 	])
-  // 	if(cat.status==200){
-  // 		this.category = cat.data
-  // 		this.tag = tag.data
-  // 	}else{
-  // 		this.swr()
-  // 	}
-  // }
+    async created(){
+            const [cat, tag] = await Promise.all([
+                this.callApi('get', 'app/get_category'),
+                this.callApi('get', 'app/get_tags'),
+            ])
+            if(cat.status==200){
+                this.category = cat.data
+                this.tag = tag.data
+            }else{
+                this.swr()
+            }
+        }
 };
 </script>
 <style>
@@ -124,7 +222,7 @@ export default {
 }
 
 ._input_field {
-    margin: 20px 0px 0 160px;
+    margin: 20px 0px 20px 160px;
     width: 717px;
 }
 </style>

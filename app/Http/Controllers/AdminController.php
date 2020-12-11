@@ -363,7 +363,7 @@ class AdminController extends Controller
         return Blog::create([
             'title' => $title,
             'post' => 'as',
-            'post_except' => 'as',
+            'post_excerpt' => 'as',
             'user_id' => 1,
             'metaDescription' => 'as'
         ]);

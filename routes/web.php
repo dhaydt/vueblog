@@ -30,18 +30,19 @@ Route::prefix('app')->middleware([AdminCheck::class])->group(function(){
     Route::post('/edit_category', [AdminController::class, 'editCategory']);
 
     Route::post('/get_users', [AdminController::class, 'getUser']);
-    Route::post('/create_user', [AdminController::class, 'createUser']);
     Route::post('/edit_user', [AdminController::class, 'editUser']);
     Route::post('/delete_user', [AdminController::class, 'deleteUser']);
     Route::post('/admin_login', [AdminController::class, 'adminLogin']);
 
-    Route::post('/get_roles', [AdminController::class, 'getRoles']);
     Route::post('/create_role', [AdminController::class, 'addRole']);
     Route::post('/edit_role', [AdminController::class, 'editRole']);
     Route::post('/delete_role', [AdminController::class, 'deleteRole']);
     Route::post('/assign_roles', [AdminController::class, 'assignRole']);
     Route::post('/create-blog', [AdminController::class, 'createBlog']);
 });
+
+Route::post('/get_roles', [AdminController::class, 'getRoles']);
+Route::post('/create_user', [AdminController::class, 'createUser']);
 
 Route::post('createblog', [AdminController::class, 'uploadEditorImage']);
 Route::get('slug', [AdminController::class, 'slug']);

@@ -15,6 +15,7 @@ import adminusers from './admin/pages/adminusers'
 import login from './admin/pages/login'
 import role from './admin/pages/role'
 import assignrole from './admin/pages/assignrole'
+import register from './admin/pages/register'
 
 
 Vue.use(Router);
@@ -25,6 +26,11 @@ const routes = [
         path: '/',
         component: home,
         name: '/'
+    },
+    {
+        path: '/register',
+        component: register,
+        name: 'register'
     },
     {
         path: '/tags',

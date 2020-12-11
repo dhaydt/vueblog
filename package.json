@@ -33,6 +33,7 @@
         "@editorjs/embed": "^2.4.0",
         "@editorjs/header": "^2.6.1",
         "@editorjs/list": "^1.6.1",
+        "editorjs-html": "^3.0.3",
         "sass": "^1.27.0",
         "sass-loader": "^10.0.3",
         "tiptap-extensions": "^1.33.2",

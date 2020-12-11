@@ -16,6 +16,7 @@
                         :loading="isLogging"
                     >{{isLogging ? 'Login...' : 'Login'}}</Button>
                 </div>
+                not registed? <router-link to="register">register here</router-link>
             </div>
         </div>
     </div>
