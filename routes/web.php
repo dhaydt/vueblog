@@ -39,10 +39,10 @@ Route::prefix('app')->middleware([AdminCheck::class])->group(function(){
     Route::post('/delete_role', [AdminController::class, 'deleteRole']);
     Route::post('/assign_roles', [AdminController::class, 'assignRole']);
     Route::post('/create-blog', [AdminController::class, 'createBlog']);
+    Route::post('/create_user', [AdminController::class, 'createUser']);
 });
 
 Route::post('/get_roles', [AdminController::class, 'getRoles']);
-Route::post('/create_user', [AdminController::class, 'createUser']);
 
 Route::post('createblog', [AdminController::class, 'uploadEditorImage']);
 Route::get('slug', [AdminController::class, 'slug']);
