@@ -16,7 +16,6 @@
                         holder-id="codex-editor"
                         save-button-id="save-button"
                         :init-data="initData"
-                        @save="onSave"
                         :config="config"
                         >
                     </div>
@@ -126,26 +125,13 @@ export default {
     },
     methods: {
         async onSave(outputData) {
-            // var data = outputData
-            // await this.outputHtml(data.blocks)
-            // this.data.post = this.articleHTML
-            // this.data.jsonData = JSON.stringify(data)
-            // console.log(this.articleHTML)
-            // console.log('data output', this.data)
-        },
 
-        async save(outputData) {
-            //var data = response
-            await editor.save().then((outputData) => {
-                console.log('Article data: ', outputData)
-                }).catch((error) => {
-                console.log('Saving failed: ', error)
-                });
-                var data = outputData
-            await this.outputHtml(data.blocks)
+            var data = editor.save().then((outputData))
+            await this.outputHtml('output',data.blocks)
+            console.log('onSave', this.data)
             this.data.post = this.articleHTML
             this.data.jsonData = JSON.stringify(data)
-            console.log(this.articleHTML)
+            console.log('article', this.articleHTML)
             console.log('data output', this.data)
             this.isCreating = true
             const res = await this.callApi('post', 'app/create-blog', this.data)
@@ -155,6 +141,22 @@ export default {
             }else {
                 this.swr()
             }
+            this.isCreating = false
+        },
+
+        async save(outputData){
+            // var data = outputData
+            await editor.save().then((data) => {
+                console.log('Article data: ', data.blocks)
+                // this.outputHtml('output',data.blocks)
+                }).catch((error) => {
+                console.log('Saving failed: ', error)
+                });
+            // this.onSave(data)
+            console.log('datablock', editor.save())
+            this.onSave()
+
+
         },
 
 
