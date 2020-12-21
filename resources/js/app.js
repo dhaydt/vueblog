@@ -7,7 +7,8 @@ import common from './common.js';
 import store from './store';
 import jsonToHtml from './jsonToHtml';
 import 'view-design/dist/styles/iview.css';
-
+import Editor from 'vue-editor-js'
+Vue.use(Editor)
 
 Vue.use(VueRouter)
 Vue.use(ViewUI);
